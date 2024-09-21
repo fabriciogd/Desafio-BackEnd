@@ -3,15 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35303.130
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Moto.Api", "Moto.Api\Moto.Api.csproj", "{4BEFA913-AEFA-4017-BE01-111FAAF949BA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Moto.Api", "Moto.Api\Moto.Api.csproj", "{4BEFA913-AEFA-4017-BE01-111FAAF949BA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Moto.Application", "Moto.Application\Moto.Application.csproj", "{2527FEA4-161D-4946-A28D-FD9C3A273C35}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Moto.Application", "Moto.Application\Moto.Application.csproj", "{2527FEA4-161D-4946-A28D-FD9C3A273C35}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Moto.Domain", "Moto.Domain\Moto.Domain.csproj", "{9D91AE75-6CBA-4D95-8912-7C950C56262E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Moto.Domain", "Moto.Domain\Moto.Domain.csproj", "{9D91AE75-6CBA-4D95-8912-7C950C56262E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Moto.Infraestructure", "Moto.Infraestructure\Moto.Infraestructure.csproj", "{4FDF7F8F-37B1-4C18-976A-94F9C6D700EC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Moto.Infraestructure", "Moto.Infraestructure\Moto.Infraestructure.csproj", "{4FDF7F8F-37B1-4C18-976A-94F9C6D700EC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Moto.Persistence", "Moto.Persistence\Moto.Persistence.csproj", "{003B506B-D2D6-4F7C-BE8F-5E33720F1235}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Moto.Persistence", "Moto.Persistence\Moto.Persistence.csproj", "{003B506B-D2D6-4F7C-BE8F-5E33720F1235}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{A24CEE69-7D3C-4E98-8D93-74DF87A22307}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Moto.Application.UnitTest", "Moto.Application.UnitTest\Moto.Application.UnitTest.csproj", "{E530F2CA-DB57-43D7-A148-378F141C3F4A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,9 +43,16 @@ Global
 		{003B506B-D2D6-4F7C-BE8F-5E33720F1235}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{003B506B-D2D6-4F7C-BE8F-5E33720F1235}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{003B506B-D2D6-4F7C-BE8F-5E33720F1235}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E530F2CA-DB57-43D7-A148-378F141C3F4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E530F2CA-DB57-43D7-A148-378F141C3F4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E530F2CA-DB57-43D7-A148-378F141C3F4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E530F2CA-DB57-43D7-A148-378F141C3F4A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E530F2CA-DB57-43D7-A148-378F141C3F4A} = {A24CEE69-7D3C-4E98-8D93-74DF87A22307}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8A5518D2-4575-402E-8280-A82965C5B587}

@@ -14,5 +14,6 @@ public class MotoDbContext(DbContextOptions<MotoDbContext> dbOptions)
         base.OnModelCreating(modelBuilder);
 
         modelBuilder.ApplyConfiguration(new MotorcycleConfiguration());
+        modelBuilder.ApplyConfiguration(new CourierConfiguration());
     }
 }

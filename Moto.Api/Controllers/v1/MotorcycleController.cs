@@ -32,7 +32,7 @@ public class MotorcycleController(IMediator mediator) : ControllerBase
 
             return Created();
         }
-        catch (InvalidException ex)
+        catch (ValidationException ex)
         {
             return BadRequest(ApiResponse.WithMessage(ex.Message));
         }
@@ -71,7 +71,7 @@ public class MotorcycleController(IMediator mediator) : ControllerBase
         {
             return NotFound(ApiResponse.WithMessage(ex.Message));
         }
-        catch (InvalidException ex)
+        catch (ValidationException ex)
         {
             return BadRequest(ApiResponse.WithMessage(ex.Message));
         }
@@ -119,7 +119,7 @@ public class MotorcycleController(IMediator mediator) : ControllerBase
         {
             return NotFound(ApiResponse.WithMessage(ex.Message));
         }
-        catch (InvalidException ex)
+        catch (ValidationException ex)
         {
             return BadRequest(ApiResponse.WithMessage(ex.Message));
         }

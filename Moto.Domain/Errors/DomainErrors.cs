@@ -8,5 +8,10 @@
         {
             public static string NotFound => "Moto não encontrada";
         }
+
+        public static class Courier
+        {
+            public static string NotFound => "Entregador não encontrada";
+        }
     }
 }

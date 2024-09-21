@@ -11,7 +11,7 @@ public sealed class GetMotorcycleCommandHandler(
 {
     public async Task<MotorcycleResponse> Handle(GetMotorcycleCommand request, CancellationToken cancellationToken)
     {
-        var motorcycle = await _repository.FindByIdentificatorAsync(request.Id, cancellationToken);
+        var motorcycle = await _repository.FindByIdentificadorAsync(request.Id, cancellationToken);
 
         if (motorcycle is null)
             throw new NotFoundException(DomainErrors.Motorcycle.NotFound);

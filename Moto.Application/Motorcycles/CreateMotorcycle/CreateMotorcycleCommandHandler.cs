@@ -18,14 +18,14 @@ public sealed class CreateMotorcycleCommandHandler(
         var validationResult = await _validator.ValidateAsync(request, cancellationToken);
 
         if (!validationResult.IsValid)
-            throw new InvalidException(DomainErrors.Invalid);
+            throw new Domain.Exceptions.ValidationException(DomainErrors.Invalid);
 
-        var existsWithPlate = await _repository.ExistWithPlateAsync(request.Placa, cancellationToken);
+        var existsWithPlate = await _repository.IsPlacaUniqueAsync(request.Placa, cancellationToken);
 
         if (existsWithPlate is true)
-            throw new InvalidException(DomainErrors.Invalid);
+            throw new Domain.Exceptions.ValidationException(DomainErrors.Invalid);
 
-        var motorcycle = new Motorcycle(request.Identificador, request.Ano, request.Modelo, request.Placa);
+        var motorcycle = Motorcycle.Create(request.Identificador, request.Ano, request.Modelo, request.Placa);
 
         await _repository.AddAsync(motorcycle, cancellationToken);
 

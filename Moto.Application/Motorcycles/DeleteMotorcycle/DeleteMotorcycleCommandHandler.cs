@@ -12,7 +12,7 @@ public sealed class DeleteMotorcycleCommandHandler(
 {
     public async Task<Unit> Handle(DeleteMotorcycleCommand request, CancellationToken cancellationToken)
     {
-        var motorcycle = await _repository.FindByIdentificatorAsync(request.Id, cancellationToken);
+        var motorcycle = await _repository.FindByIdentificadorAsync(request.Id, cancellationToken);
 
         if (motorcycle is null)
             throw new NotFoundException(DomainErrors.Motorcycle.NotFound);

@@ -17,8 +17,4 @@
     <ProjectReference Include="..\Moto.Domain\Moto.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Couriers\" />
-  </ItemGroup>
-
 </Project>

@@ -27,6 +27,6 @@ internal sealed class MotorcycleConfiguration : IEntityTypeConfiguration<Motorcy
             .IsRequired()
             .HasMaxLength(50);
 
-        builder.HasIndex(x => x.Placa);
+        builder.HasIndex(x => x.Placa).IsUnique();
     }
 }

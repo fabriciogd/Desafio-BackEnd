@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Moto.Persistence;
 using Moto.Application;
+using System.Text.Json;
+using Moto.Infraestructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,12 +18,18 @@ builder.Services
     })
     .AddEndpointsApiExplorer()
     .AddSwaggerGen(x => x.EnableAnnotations())
-    .AddControllers();
+    .AddControllers()
+    .AddJsonOptions(
+        options =>
+        {
+            options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower;
+        }); ;
 
 builder.Services
     .AddPersistence(builder.Configuration)
     .AddRepositories()
-    .AddCommandHandlers();
+    .AddCommandHandlers()
+    .AddServices();
 
 builder.Host.UseDefaultServiceProvider((context, serviceProviderOptions) =>
 {
@@ -40,6 +48,5 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.MapControllers();
-
 
 app.Run();
