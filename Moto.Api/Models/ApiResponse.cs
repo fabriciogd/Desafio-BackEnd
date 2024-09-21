@@ -6,13 +6,8 @@ public  class ApiResponse
     {
     }
 
-    public bool Success { get; protected init; }
-    public int StatusCode { get; protected init; }
+    public string Mensagem { get; private set; }
 
-    public IEnumerable<ApiErrorResponse> Errors { get; private init; } = [];
-
-    public static ApiResponse BadRequest(IEnumerable<ApiErrorResponse> errors) =>
-       new() { Success = false, StatusCode = StatusCodes.Status400BadRequest, Errors = errors };
-    public static ApiResponse BadRequest() =>
-       new() { Success = false, StatusCode = StatusCodes.Status400BadRequest };
+    public static ApiResponse WithMessage(string message) =>
+        new() { Mensagem = message };
 }

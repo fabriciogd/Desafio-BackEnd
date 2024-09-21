@@ -19,4 +19,6 @@ public sealed class Motorcycle: BaseEntity
 
         AddDomainEvent(new MotorcycleCreatedEvent(identificador, ano, modelo, placa));
     }
+
+    public void UpdatePlate(string placa) => Placa = placa;
 }

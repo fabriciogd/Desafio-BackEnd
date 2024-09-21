@@ -21,7 +21,8 @@ public sealed class CreateMotorcycleCommandValidator : AbstractValidator<CreateM
 
         RuleFor(command => command.Placa)
             .NotEmpty()
-            .MaximumLength(7)
+            .MaximumLength(8)
+            .MinimumLength(8)
             .SetValidator(new LicensePlateValidator<CreateMotorcycleCommand>());
 
     }

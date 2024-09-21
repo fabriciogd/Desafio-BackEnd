@@ -15,7 +15,7 @@ builder.Services
         versioningOptions.AssumeDefaultVersionWhenUnspecified = true;
     })
     .AddEndpointsApiExplorer()
-    .AddSwaggerGen()
+    .AddSwaggerGen(x => x.EnableAnnotations())
     .AddControllers();
 
 builder.Services

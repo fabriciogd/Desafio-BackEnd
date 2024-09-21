@@ -1,26 +1,24 @@
 ﻿using MediatR;
-using Moto.Domain.Primitives.Result;
+using Moto.Application.Motorcycles.Response;
 using Moto.Domain.Repositories;
 
-namespace Moto.Application.Motorcycles.ListMotorcycle
+namespace Moto.Application.Motorcycles.ListMotorcycle;
+
+public sealed class ListMotorcycleQueryHandler(
+    IMotorcyleRepository _repository) : IRequestHandler<ListMotorcycleQuery, IEnumerable<MotorcycleResponse>>
 {
-    public class ListMotorcycleQueryHandler(
-        IMotorcyleRepository _repository) : IRequestHandler<ListMotorcycleQuery, Result<IEnumerable<ListMotorcycleResponse>>>
+    public async Task<IEnumerable<MotorcycleResponse>> Handle(ListMotorcycleQuery request, CancellationToken cancellationToken)
     {
-        public async Task<Result<IEnumerable<ListMotorcycleResponse>>> Handle(ListMotorcycleQuery request, CancellationToken cancellationToken)
-        {
-            var motorcycles = await _repository.ListByPlateAsync(request.Placa, cancellationToken);
+        var motorcycles = await _repository.ListByPlateAsync(request.Placa, cancellationToken);
 
-            var list = motorcycles.Select(x => 
-                new ListMotorcycleResponse(
-                    x.Id, 
-                    x.Identificador, 
-                    x.Ano, 
-                    x.Modelo, 
-                    x.Placa)
-                );
+        var response = motorcycles.Select(x => 
+            new MotorcycleResponse(
+                x.Identificador, 
+                x.Ano, 
+                x.Modelo, 
+                x.Placa)
+            );
 
-            return Result<IEnumerable<ListMotorcycleResponse>>.Success(list);
-        }
+        return response;
     }
 }

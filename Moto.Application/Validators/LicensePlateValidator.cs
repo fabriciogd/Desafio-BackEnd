@@ -12,7 +12,7 @@ public class LicensePlateValidator<T> : IPropertyValidator<T, string>
     {
         if (string.IsNullOrWhiteSpace(value)) { return false; }
 
-        if (value.Length > 8) { return false; }
+        if (value.Length != 8) { return false; }
 
         value = value.Replace("-", "").Trim();
 
