@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Moto.Persistence.Contexts;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Moto.Persistence.Migrations
 {
     [DbContext(typeof(MotoDbContext))]
-    partial class MotoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240921192720_Plan")]
+    partial class Plan
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -100,7 +103,7 @@ namespace Moto.Persistence.Migrations
                     b.HasIndex("Placa")
                         .IsUnique();
 
-                    b.ToTable("Motorcycle");
+                    b.ToTable("Motorcycles");
                 });
 
             modelBuilder.Entity("Moto.Domain.Entities.Plan", b =>
@@ -112,8 +115,8 @@ namespace Moto.Persistence.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityAlwaysColumn(b.Property<int>("Id"));
 
                     b.Property<decimal>("CostPerDay")
-                        .HasPrecision(5, 4)
-                        .HasColumnType("numeric(5,4)");
+                        .HasPrecision(7, 5)
+                        .HasColumnType("numeric(7,5)");
 
                     b.Property<short>("Days")
                         .HasColumnType("smallint");
@@ -165,77 +168,6 @@ namespace Moto.Persistence.Migrations
                             Days = (short)50,
                             Fee = 1m
                         });
-                });
-
-            modelBuilder.Entity("Moto.Domain.Entities.Rental", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityAlwaysColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CourierId")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("EndDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime>("ExpectedEndData")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<int>("MotorcycleId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("PlanId")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("integer");
-
-                    b.Property<decimal?>("TotalPayment")
-                        .HasPrecision(7, 4)
-                        .HasColumnType("numeric(7,4)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CourierId");
-
-                    b.HasIndex("MotorcycleId");
-
-                    b.HasIndex("PlanId");
-
-                    b.ToTable("Rental");
-                });
-
-            modelBuilder.Entity("Moto.Domain.Entities.Rental", b =>
-                {
-                    b.HasOne("Moto.Domain.Entities.Courier", "Courier")
-                        .WithMany()
-                        .HasForeignKey("CourierId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Moto.Domain.Entities.Motorcycle", "Motorcycle")
-                        .WithMany()
-                        .HasForeignKey("MotorcycleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Moto.Domain.Entities.Plan", "Plan")
-                        .WithMany()
-                        .HasForeignKey("PlanId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Courier");
-
-                    b.Navigation("Motorcycle");
-
-                    b.Navigation("Plan");
                 });
 #pragma warning restore 612, 618
         }

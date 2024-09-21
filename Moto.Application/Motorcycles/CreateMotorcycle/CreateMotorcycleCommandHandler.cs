@@ -3,7 +3,6 @@ using MediatR;
 using Moto.Application.Interfaces;
 using Moto.Domain.Entities;
 using Moto.Domain.Errors;
-using Moto.Domain.Exceptions;
 using Moto.Domain.Repositories;
 
 namespace Moto.Application.Motorcycles.CreateMotorcycle;
@@ -18,12 +17,12 @@ public sealed class CreateMotorcycleCommandHandler(
         var validationResult = await _validator.ValidateAsync(request, cancellationToken);
 
         if (!validationResult.IsValid)
-            throw new Domain.Exceptions.ValidationException(DomainErrors.Invalid);
+            throw new ValidationException(DomainErrors.Invalid);
 
-        var existsWithPlate = await _repository.IsPlacaUniqueAsync(request.Placa, cancellationToken);
+        var isPlacaUnique = await _repository.IsPlacaUniqueAsync(request.Placa, cancellationToken);
 
-        if (existsWithPlate is true)
-            throw new Domain.Exceptions.ValidationException(DomainErrors.Invalid);
+        if (isPlacaUnique is true)
+            throw new ValidationException(DomainErrors.Invalid);
 
         var motorcycle = Motorcycle.Create(request.Identificador, request.Ano, request.Modelo, request.Placa);
 
