@@ -11,7 +11,7 @@ internal sealed class RentalConfiguration : IEntityTypeConfiguration<Rental>
     {
         builder.ConfigureBaseEntity();
 
-        builder.Property(x => x.TotalPayment).HasPrecision(7, 5);
+        builder.Property(x => x.TotalPayment).HasPrecision(7, 2);
 
         builder.HasOne(x => x.Courier)
             .WithMany()

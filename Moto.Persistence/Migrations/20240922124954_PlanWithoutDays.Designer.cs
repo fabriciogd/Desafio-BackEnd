@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Moto.Persistence.Contexts;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Moto.Persistence.Migrations
 {
     [DbContext(typeof(MotoDbContext))]
-    partial class MotoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240922124954_PlanWithoutDays")]
+    partial class PlanWithoutDays
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -112,12 +115,12 @@ namespace Moto.Persistence.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<decimal>("CostPerDay")
-                        .HasPrecision(5, 2)
-                        .HasColumnType("numeric(5,2)");
+                        .HasPrecision(7, 5)
+                        .HasColumnType("numeric(7,5)");
 
                     b.Property<decimal>("Fee")
-                        .HasPrecision(5, 2)
-                        .HasColumnType("numeric(5,2)");
+                        .HasPrecision(5, 4)
+                        .HasColumnType("numeric(5,4)");
 
                     b.HasKey("Id");
 
@@ -186,8 +189,8 @@ namespace Moto.Persistence.Migrations
                         .HasColumnType("integer");
 
                     b.Property<decimal?>("TotalPayment")
-                        .HasPrecision(7, 2)
-                        .HasColumnType("numeric(7,2)");
+                        .HasPrecision(7, 5)
+                        .HasColumnType("numeric(7,5)");
 
                     b.HasKey("Id");
 

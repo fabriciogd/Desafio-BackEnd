@@ -1,5 +1,6 @@
 ﻿using Moto.Domain.Base;
 using Moto.Domain.Enums;
+using Moto.Domain.Exceptions;
 
 namespace Moto.Domain.Entities;
 
@@ -15,7 +16,7 @@ public class Rental : BaseEntity
 
     public DateTime EndDate { get; private set; }
     
-    public DateTime ExpectedEndData { get; private set; }
+    public DateTime ExpectedEndDate { get; private set; }
 
     public RentStatusEnum Status { get; private set; }
 
@@ -26,4 +27,54 @@ public class Rental : BaseEntity
     public virtual Motorcycle Motorcycle { get; private set; }
 
     public virtual Courier Courier { get; private set; }
+
+    private Rental(int courierId, int motorcycleId, int planId, DateTime startDate, DateTime endDate, DateTime expectedEndDate)
+    {
+        CourierId = courierId;
+        MotorcycleId = motorcycleId;
+        PlanId = planId;
+        StartDate = startDate;
+        EndDate = endDate;
+        ExpectedEndDate = expectedEndDate;
+    }
+
+    public static Rental Create(
+        int courierId,
+        int motorcycleId,
+        int planId,
+        DateTime startDate,
+        DateTime endDate,
+        DateTime expectedEndDate) => 
+            new Rental(courierId, motorcycleId, planId, DateTime.Now.AddDays(1), endDate, expectedEndDate);
+
+    public void Complete(DateTime endDate)
+    {
+        EndDate = endDate;
+        Status = RentStatusEnum.Finished;
+
+        if (EndDate <= StartDate)
+            throw new ValidationException("Data não pode ser menor que data de inicio");
+
+        TotalPayment = CalculateBaseCoast() + CalculateFee();
+    }
+
+    private decimal CalculateFee()
+    {
+        var notEffectedDays = EndDate.Subtract(StartDate).Days;
+
+        if (notEffectedDays == 0) return 0;
+
+        return notEffectedDays > 0 ?
+            Plan.CostPerDay * Plan.Fee * notEffectedDays :
+            Math.Abs(notEffectedDays) * 50.0M;
+    }
+
+    private decimal CalculateBaseCoast()
+    {
+        DateTime endDate = EndDate >= ExpectedEndDate ? ExpectedEndDate : EndDate;
+
+        int totalDays = endDate.Subtract(StartDate).Days;
+
+        return Plan.CostPerDay * totalDays;
+    }
 }

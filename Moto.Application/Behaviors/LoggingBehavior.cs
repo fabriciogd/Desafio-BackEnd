@@ -27,13 +27,13 @@ public class LoggingBehavior<TRequest, TResponse>(ILogger<LoggingBehavior<TReque
 
             var timeTaken = timer.Elapsed.TotalSeconds;
 
-            logger.LogInformation("Command '{CommandName}' handled ({TimeTaken} seconds)", commandName, timeTaken);
+            logger.LogInformation("Command '{CommandName}' handled {TimeTaken} seconds", commandName, timeTaken);
 
             return response;
         }
         catch (Exception ex)
         {
-            logger.LogError("Command '{CommandName}' exception ({Exception})", commandName, ex);
+            logger.LogError("Command '{CommandName}' exception {@Exception}", commandName, ex);
 
             throw;
         }

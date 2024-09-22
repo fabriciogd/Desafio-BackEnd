@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Moto.Domain.Entities;
-using Moto.Persistence.Extensions;
 
 namespace Moto.Persistence.Configurations;
 
@@ -9,19 +8,20 @@ internal sealed class PlanConfiguration : IEntityTypeConfiguration<Plan>
 {
     public void Configure(EntityTypeBuilder<Plan> builder)
     {
-        builder.ConfigureBaseEntity();
+        builder.HasKey(x => x.Id);
 
-        builder.Property(x => x.CostPerDay).HasPrecision(7, 5);
-        builder.Property(x => x.Fee).HasPrecision(5, 4);
+        builder
+            .Ignore(entity => entity.DomainEvents);
 
-        builder.HasIndex(x => x.Days).IsUnique();
+        builder.Property(x => x.CostPerDay).HasPrecision(5, 2);
+        builder.Property(x => x.Fee).HasPrecision(5, 2);
 
         builder.HasData(
-            new Plan(1, 7, 30, 1.20M),
-            new Plan(2, 15, 28, 1.40M),
-            new Plan(3, 30, 22, 1),
-            new Plan(4, 45, 20, 1),
-            new Plan(5, 50, 18, 1)
+            new Plan(7, 30, 1.20M),
+            new Plan(15, 28, 1.40M),
+            new Plan(30, 22, 1),
+            new Plan(45, 20, 1),
+            new Plan(50, 18, 1)
         );
     }
 }
