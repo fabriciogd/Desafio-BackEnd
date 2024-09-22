@@ -11,6 +11,7 @@ services:
       - 5432:5432
     volumes:
       - ./data/postgres:/var/lib/postgresql/data
+      
   dcs-pgadmin:
     image: dpage/pgadmin4:latest
     container_name: dcs-pgadmin
@@ -24,3 +25,13 @@ services:
       - 8080:80
     volumes:
       - ./data/pgadmin:/var/lib/pgadmin
+      
+  dcs-seq:
+    image: datalust/seq:latest
+    container_name: dcs-seq
+    restart: always
+    environment:
+      - ACCEPT_EULA=Y
+    ports:
+      - 5341:5341
+      - 8081:80
