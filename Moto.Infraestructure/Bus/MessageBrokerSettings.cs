@@ -1,0 +1,34 @@
+﻿namespace Moto.Infraestructure.Bus;
+
+/// <summary>
+/// Represents the message broker settings.
+/// </summary>
+public sealed class MessageBrokerSettings
+{
+    public const string SettingsKey = "MessageBroker";
+
+    /// <summary>
+    /// Gets or sets the host name.
+    /// </summary>
+    public string HostName { get; set; }
+
+    /// <summary>
+    /// Gets or sets the port.
+    /// </summary>
+    public int Port { get; set; }
+
+    /// <summary>
+    /// Gets or sets the user name.
+    /// </summary>
+    public string UserName { get; set; }
+
+    /// <summary>
+    /// Gets or sets the password.
+    /// </summary>
+    public string Password { get; set; }
+
+    /// <summary>
+    /// Gets or sets the exchange.
+    /// </summary>
+    public string ExchangeName { get; set; }
+}

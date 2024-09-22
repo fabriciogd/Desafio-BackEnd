@@ -1,6 +1,8 @@
-﻿namespace Moto.Domain.Base;
+﻿using MediatR;
 
-public abstract class DomainEvent
+namespace Moto.Domain.Base;
+
+public abstract class DomainEvent : INotification
 {
     public DateTime OccurredOn { get; private init; } = DateTime.Now;
 }

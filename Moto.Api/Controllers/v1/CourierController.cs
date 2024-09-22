@@ -34,7 +34,7 @@ public class CourierController(IMediator mediator): ControllerBase
         }
     }
 
-    [HttpPost("/{id}/cnh")]
+    [HttpPost("{id}/cnh")]
     [Consumes(MediaTypeNames.Application.Json)]
     [Produces(MediaTypeNames.Application.Json)]
     [SwaggerOperation("Enviar foto da cnh")]

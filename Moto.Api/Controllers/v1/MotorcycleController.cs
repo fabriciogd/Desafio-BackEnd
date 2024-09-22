@@ -50,7 +50,7 @@ public class MotorcycleController(IMediator mediator) : ControllerBase
         return Ok(result);
     }
 
-    [HttpPut("/{id}/placa")]
+    [HttpPut("{id}/placa")]
     [Consumes(MediaTypeNames.Application.Json)]
     [Produces(MediaTypeNames.Application.Json)]
     [SwaggerOperation("Modificar a placa de uma moto")]
@@ -77,7 +77,7 @@ public class MotorcycleController(IMediator mediator) : ControllerBase
         }
     }
 
-    [HttpGet("/{id}")]
+    [HttpGet("{id}")]
     [Consumes(MediaTypeNames.Application.Json)]
     [Produces(MediaTypeNames.Application.Json)]
     [SwaggerOperation("Consultar moto existente por id")]
@@ -99,7 +99,7 @@ public class MotorcycleController(IMediator mediator) : ControllerBase
         }
     }
 
-    [HttpDelete("/{id}")]
+    [HttpDelete("{id}")]
     [Consumes(MediaTypeNames.Application.Json)]
     [Produces(MediaTypeNames.Application.Json)]
     [SwaggerOperation("Remover uma moto")]

@@ -26,10 +26,10 @@ builder.Services
         }); ;
 
 builder.Services
+    .AddServices(builder.Configuration)
     .AddPersistence(builder.Configuration)
     .AddRepositories()
-    .AddCommandHandlers()
-    .AddServices();
+    .AddCommandHandlers();
 
 builder.Host.UseDefaultServiceProvider((context, serviceProviderOptions) =>
 {

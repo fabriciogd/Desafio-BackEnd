@@ -36,29 +36,7 @@ public class RentalController(IMediator mediator) : ControllerBase
         }
     }
 
-    [HttpGet("/{id}")]
-    [Consumes(MediaTypeNames.Application.Json)]
-    [Produces(MediaTypeNames.Application.Json)]
-    [SwaggerOperation("Consultar moto existente por id")]
-    [SwaggerResponse(StatusCodes.Status200OK, "Detalhes da locação", typeof(RentalResponse))]
-    [SwaggerResponse(StatusCodes.Status404NotFound, "Dados não encontrado", typeof(ApiResponse))]
-    public async Task<IActionResult> Get([FromRoute] int id, CancellationToken cancellationToken)
-    {
-        var command = new GetRentalCommand(id);
-
-        try
-        {
-            var response = await mediator.Send(command, cancellationToken);
-
-            return Ok(response);
-        }
-        catch (NotFoundException ex)
-        {
-            return NotFound(ApiResponse.WithMessage(ex.Message));
-        }
-    }
-
-    [HttpGet("/{id}")]
+    [HttpPut("{id}/devolucao")]
     [Consumes(MediaTypeNames.Application.Json)]
     [Produces(MediaTypeNames.Application.Json)]
     [SwaggerOperation("Informar data de devolução e calcular valor")]
@@ -82,6 +60,26 @@ public class RentalController(IMediator mediator) : ControllerBase
         catch(ValidationException ex)
         {
             return BadRequest(ApiResponse.WithMessage("Dados inválidos"));
+        }
+    }
+
+    [HttpGet("{id}")]
+    [Consumes(MediaTypeNames.Application.Json)]
+    [Produces(MediaTypeNames.Application.Json)]
+    [SwaggerOperation("Consultar moto existente por id")]
+    [SwaggerResponse(StatusCodes.Status200OK, "Detalhes da locação", typeof(RentalResponse))]
+    [SwaggerResponse(StatusCodes.Status404NotFound, "Dados não encontrado", typeof(ApiResponse))]
+    public async Task<IActionResult> Get([FromRoute] GetRentalCommand command, CancellationToken cancellationToken)
+    {
+        try
+        {
+            var response = await mediator.Send(command, cancellationToken);
+
+            return Ok(response);
+        }
+        catch (NotFoundException ex)
+        {
+            return NotFound(ApiResponse.WithMessage(ex.Message));
         }
     }
 }

@@ -17,7 +17,7 @@ internal sealed class MotorcycleConfiguration : IEntityTypeConfiguration<Motorcy
 
         builder.Property(x => x.Placa)
             .IsRequired()
-            .HasMaxLength(7);
+            .HasMaxLength(8);
 
         builder.Property(x => x.Modelo)
             .IsRequired()

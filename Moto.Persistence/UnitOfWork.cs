@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Moto.Application.Interfaces;
 using Moto.Domain.Base;
 using Moto.Persistence.Contexts;
@@ -6,7 +7,7 @@ using System.Data;
 
 namespace Moto.Persistence;
 
-internal sealed class UnitOfWork(MotoDbContext _context) : IUnitOfWork
+internal sealed class UnitOfWork(MotoDbContext _context, IMediator mediator) : IUnitOfWork
 {
     public async Task SaveChangesAsync(CancellationToken cancellationToken = default)
     {
@@ -52,6 +53,7 @@ internal sealed class UnitOfWork(MotoDbContext _context) : IUnitOfWork
 
     private async Task AfterSaveChangesAsync(IReadOnlyList<DomainEvent> domainEvents)
     {
-
+        domainEvents.ToList()
+           .ForEach(@event => mediator.Publish(@event));
     }
 }
