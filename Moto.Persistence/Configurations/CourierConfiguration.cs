@@ -16,29 +16,25 @@ internal sealed class CourierConfiguration : IEntityTypeConfiguration<Courier>
     {
         builder.ConfigureBaseEntity();
 
-        builder.Property(x => x.Identificador)
-            .IsRequired()
-            .HasMaxLength(10);
-
-        builder.Property(x => x.CNPJ)
+        builder.Property(x => x.Cnpj)
             .IsRequired()
             .HasMaxLength(14);
 
-        builder.Property(x => x.DataNascimento)
+        builder.Property(x => x.BirthDate)
             .IsRequired();
 
-        builder.Property(x => x.NumeroCNH)
+        builder.Property(x => x.DrivingLicense)
             .IsRequired()
             .HasMaxLength(9);
 
-        builder.Property(x => x.TipoCNH)
+        builder.Property(x => x.DrivingLicenseType)
             .IsRequired()
             .HasMaxLength(2);
 
-        builder.Property(x => x.ImagemCNH)
+        builder.Property(x => x.DrivingLicenseImagePath)
             .HasMaxLength(256);
 
-        builder.HasIndex(x => x.CNPJ).IsUnique();
-        builder.HasIndex(x => x.NumeroCNH).IsUnique();
+        builder.HasIndex(x => x.Cnpj).IsUnique();
+        builder.HasIndex(x => x.DrivingLicense).IsUnique();
     }
 }

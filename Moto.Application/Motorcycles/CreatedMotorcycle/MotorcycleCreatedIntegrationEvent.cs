@@ -1,34 +1,30 @@
 ﻿using Moto.Application.Base;
 using Moto.Domain.Events;
+using System.Reflection;
 using System.Text.Json.Serialization;
 
 namespace Moto.Application.Motorcycles.CreatedMotorcycle;
 
 public sealed class MotorcycleCreatedIntegrationEvent : IIntegrationEvent
 { 
-    public string? Identificador { get; set; }
+    public int Year { get; set; }
 
-    public int Ano { get; set; }
+    public string? Model { get; set; }
 
-    public string? Modelo { get; set; }
-
-    public string? Placa { get; set; }
+    public string? LicensePlate { get; set; }
 
     internal MotorcycleCreatedIntegrationEvent(MotorcycleCreatedEvent motorcycleCreatedEvent)
     {
-        Identificador = motorcycleCreatedEvent.Identificador;
-        Ano = motorcycleCreatedEvent.Ano;
-        Modelo = motorcycleCreatedEvent.Modelo;
-        Placa = motorcycleCreatedEvent.Placa;
+        Year = motorcycleCreatedEvent.Year;
+        Model = motorcycleCreatedEvent.Model;
+        LicensePlate = motorcycleCreatedEvent.LicensePlate;
     }
 
     [JsonConstructor]
-    public MotorcycleCreatedIntegrationEvent(string? identificador, int ano, string? modelo, string? placa)
+    public MotorcycleCreatedIntegrationEvent(int year, string? model, string? licensePlate)
     {
-        Identificador = identificador;
-        Ano = ano;
-        Modelo = modelo;
-        Placa = placa;
+        Year = year;
+        Model = model;
+        LicensePlate = licensePlate;
     }
 }
-

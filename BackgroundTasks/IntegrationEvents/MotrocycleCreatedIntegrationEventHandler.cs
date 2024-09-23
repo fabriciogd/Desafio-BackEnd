@@ -12,7 +12,7 @@ internal class MotrocycleCreatedIntegrationEventHandler(
 {
     public async Task Handle(MotorcycleCreatedIntegrationEvent notification, CancellationToken cancellationToken)
     {
-        if (notification.Ano is not 2024)
+        if (notification.Year is not 2024)
             return;
 
         await _repository.AddAsync(notification.ToJsonEventData(), cancellationToken);

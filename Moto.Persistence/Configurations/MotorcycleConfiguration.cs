@@ -16,22 +16,18 @@ internal sealed class MotorcycleConfiguration : IEntityTypeConfiguration<Motorcy
     {
         builder.ConfigureBaseEntity();
 
-        builder.Property(x => x.Identificador)
-            .IsRequired()
-            .HasMaxLength(10);
-
-        builder.Property(x => x.Placa)
+        builder.Property(x => x.LicensePlate)
             .IsRequired()
             .HasMaxLength(8);
 
-        builder.Property(x => x.Modelo)
+        builder.Property(x => x.Model)
             .IsRequired()
             .HasMaxLength(50);
 
-        builder.Property(x => x.Ano)
+        builder.Property(x => x.Year)
             .IsRequired()
             .HasMaxLength(50);
 
-        builder.HasIndex(x => x.Placa).IsUnique();
+        builder.HasIndex(x => x.LicensePlate).IsUnique();
     }
 }

@@ -3,8 +3,8 @@
 namespace Moto.Application.Rents.CreateRent;
 
 public sealed record CreateRentalCommand(
-    string EntregadorId, 
-    string MotoId, 
+    int EntregadorId, 
+    int MotoId, 
     int Plano,
     DateTime DataInicio,
     DateTime DataTermino,

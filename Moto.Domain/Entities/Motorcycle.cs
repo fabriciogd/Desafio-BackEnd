@@ -4,30 +4,22 @@ using Moto.Domain.Events;
 namespace Moto.Domain.Entities;
 
 public sealed class Motorcycle: BaseEntity
-{
-    public string? Identificador { get; private set; }
-    public short Ano { get; private set; }
-    public string? Modelo { get; private set; }
-    public string? Placa { get; private set; }
+{    
+    public short Year { get; private set; }
+    public string? Model { get; private set; }
+    public string? LicensePlate { get; private set; }
 
-    public Motorcycle()
+    private Motorcycle(short year, string? model, string? licensePlate)
     {
+        Year = year;
+        Model = model;
+        LicensePlate = licensePlate;
 
+        AddDomainEvent(new MotorcycleCreatedEvent(year, model, licensePlate));
     }
 
-    private Motorcycle(string? identificador, short ano, string? modelo, string? placa)
-    {
-        Identificador = identificador;
-        Ano = ano;
-        Modelo = modelo;
-        Placa = placa;
+    public static Motorcycle Create(short year, string? model, string? licensePlate) =>
+            new Motorcycle(year, model, licensePlate);
 
-        AddDomainEvent(new MotorcycleCreatedEvent(identificador, ano, modelo, placa));
-    }
-
-    public static Motorcycle Create(
-        string? identificador, short ano, string? modelo, string? placa) =>
-            new Motorcycle(identificador, ano, modelo, placa);
-
-    public void UpdatePlate(string placa) => Placa = placa;
+    public void UpdateLicensePlate(string licensePlate) => LicensePlate = licensePlate;
 }

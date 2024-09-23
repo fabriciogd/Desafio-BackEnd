@@ -57,7 +57,7 @@ public class MotorcycleController(IMediator mediator) : ControllerBase
     [SwaggerResponse(StatusCodes.Status200OK, "Placa modificada com sucesso", typeof(ApiResponse))]
     [SwaggerResponse(StatusCodes.Status400BadRequest, "Dados inválidos", typeof(ApiResponse))]
     [SwaggerResponse(StatusCodes.Status404NotFound, "Moto não encontrada", typeof(ApiResponse))]
-    public async Task<IActionResult> Update([FromRoute] string id, [FromBody] UpdateMotorcycleCommand command, CancellationToken cancellationToken)
+    public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateMotorcycleCommand command, CancellationToken cancellationToken)
     {
         command = command with { Id = id };
 
@@ -83,7 +83,7 @@ public class MotorcycleController(IMediator mediator) : ControllerBase
     [SwaggerOperation("Consultar moto existente por id")]
     [SwaggerResponse(StatusCodes.Status200OK, "Detalhes da moto", typeof(MotorcycleResponse))]
     [SwaggerResponse(StatusCodes.Status404NotFound, "Moto não encontrada", typeof(ApiResponse))]
-    public async Task<IActionResult> Get([FromRoute] string id, CancellationToken cancellationToken)
+    public async Task<IActionResult> Get([FromRoute] int id, CancellationToken cancellationToken)
     {
         var command = new GetMotorcycleCommand(id);
 
@@ -105,7 +105,7 @@ public class MotorcycleController(IMediator mediator) : ControllerBase
     [SwaggerOperation("Remover uma moto")]
     [SwaggerResponse(StatusCodes.Status200OK, "Detalhes da moto")]
     [SwaggerResponse(StatusCodes.Status404NotFound, "Moto não encontrada", typeof(ApiResponse))]
-    public async Task<IActionResult> Delete([FromRoute] string id, CancellationToken cancellationToken)
+    public async Task<IActionResult> Delete([FromRoute] int id, CancellationToken cancellationToken)
     {
         var command = new DeleteMotorcycleCommand(id);
 

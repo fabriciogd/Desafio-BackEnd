@@ -1,3 +1,3 @@
 ﻿namespace Moto.Application.Motorcycles.Response;
 
-public sealed record MotorcycleResponse(string? Identificador, int Ano, string? Modelo, string? Placa);
+public sealed record MotorcycleResponse(int Id, int Ano, string? Modelo, string? Placa);

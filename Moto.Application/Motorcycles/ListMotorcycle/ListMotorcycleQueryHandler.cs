@@ -9,14 +9,14 @@ public sealed class ListMotorcycleQueryHandler(
 {
     public async Task<IEnumerable<MotorcycleResponse>> Handle(ListMotorcycleQuery request, CancellationToken cancellationToken)
     {
-        var motorcycles = await _repository.ListByPlacaAsync(request.Placa, cancellationToken);
+        var motorcycles = await _repository.ListAllAsync(request.Placa, cancellationToken);
 
         var response = motorcycles.Select(x => 
             new MotorcycleResponse(
-                x.Identificador, 
-                x.Ano, 
-                x.Modelo, 
-                x.Placa)
+                x.Id, 
+                x.Year, 
+                x.Model, 
+                x.LicensePlate)
             );
 
         return response;

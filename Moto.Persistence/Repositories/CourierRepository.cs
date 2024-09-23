@@ -6,12 +6,4 @@ using Moto.Persistence.Contexts;
 
 namespace Moto.Persistence.Repositories;
 
-internal sealed class CourierRepository(MotoDbContext _context) : Repository<Courier>(_context), ICourierRepository
-{
-    public async Task<Courier?> FindByIdentificadorAsync(string? identificator, CancellationToken cancellationToken)
-    {
-        return await _dbSet
-            .Where(x => x.Identificador.ToLower() == identificator.ToLower())
-            .FirstOrDefaultAsync(cancellationToken);
-    }
-}
+internal sealed class CourierRepository(MotoDbContext _context) : Repository<Courier>(_context), ICourierRepository;

@@ -10,10 +10,15 @@ public class Event : BaseEntity
 
     public string Data { get; set; }
 
-    public Event(string name, string data)
+    private Event(string name, string data)
     {
         OccuredOn = DateTime.Now;
         Name = name;
         Data = data;
+    }
+
+    public static Event Create(string name, string data)
+    {
+        return new Event(name, data);
     }
 }

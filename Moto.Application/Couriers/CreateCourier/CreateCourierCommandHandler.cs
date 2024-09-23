@@ -14,7 +14,6 @@ public sealed class CreateCourierCommandHandler(
     public async Task<Unit> Handle(CreateCourierCommand request, CancellationToken cancellationToken)
     {
         var courier = Courier.Create(
-            request.Identificador, 
             request.CNPJ, 
             request.DataNascimento, 
             request.NumeroCNH, 
@@ -27,7 +26,7 @@ public sealed class CreateCourierCommandHandler(
 
         var path = await _fileStorageService.UploadAsync(request.CNPJ, fileBytes);
 
-        courier.UpdateImagemCnh(path);
+        courier.UpdateDrivingLicenseImagePath(path);
 
         await _unitOfWork.SaveChangesAsync();
 

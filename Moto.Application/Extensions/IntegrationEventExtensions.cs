@@ -8,7 +8,7 @@ public static class IntegrationEventExtensions
 {
     public static Event ToJsonEventData(this IIntegrationEvent @event)
     {
-        return new (
+        return Event.Create(
             @event.GetGenericTypeName(),
             JsonConvert.SerializeObject(@event)
         );

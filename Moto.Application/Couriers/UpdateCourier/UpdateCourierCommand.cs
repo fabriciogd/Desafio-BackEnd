@@ -2,4 +2,4 @@
 
 namespace Moto.Application.Couriers.UpdateCourier;
 
-public sealed record UpdateCourierCommand(string? Id, string? ImagemCNH): IRequest<Unit>;
+public sealed record UpdateCourierCommand(int Id, string? ImagemCNH): IRequest<Unit>;

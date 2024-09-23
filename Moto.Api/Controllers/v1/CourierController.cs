@@ -40,7 +40,7 @@ public class CourierController(IMediator mediator): ControllerBase
     [SwaggerOperation("Enviar foto da cnh")]
     [SwaggerResponse(StatusCodes.Status201Created, "Foto cadastrada com sucesso")]
     [SwaggerResponse(StatusCodes.Status400BadRequest, "Dados inválidos", typeof(ApiResponse))]
-    public async Task<IActionResult> Update([FromRoute] string id, [FromBody] UpdateCourierCommand command, CancellationToken cancellationToken)
+    public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateCourierCommand command, CancellationToken cancellationToken)
     {
         command = command with { Id = id };
 

@@ -19,20 +19,20 @@ public sealed class UpdateMotorcycleCommandHandler (
         if (!validationResult.IsValid)
             throw new Domain.Exceptions.ValidationException(DomainErrors.Invalid);
 
-        var motorcycle = await _repository.FindByIdentificadorAsync(request.Id, cancellationToken);
+        var motorcycle = await _repository.GetByIdAsync(request.Id, cancellationToken);
 
         if (motorcycle is null)
             throw new NotFoundException(DomainErrors.Motorcycle.NotFound);
 
-        if (string.Equals(motorcycle.Placa, request.Placa, StringComparison.InvariantCultureIgnoreCase))
+        if (string.Equals(motorcycle.LicensePlate, request.Placa, StringComparison.InvariantCultureIgnoreCase))
             return;
 
-        var existsWithPlate = await _repository.IsPlacaUniqueAsync(request.Placa, cancellationToken);
+        var existsWithPlate = await _repository.IsLicensePlateUniqueAsync(request.Placa, cancellationToken);
 
         if (existsWithPlate is true)
             throw new Domain.Exceptions.ValidationException(DomainErrors.Invalid);
 
-        motorcycle.UpdatePlate(request.Placa);
+        motorcycle.UpdateLicensePlate(request.Placa);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
     }

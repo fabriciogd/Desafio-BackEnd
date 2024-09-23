@@ -19,12 +19,12 @@ public sealed class CreateMotorcycleCommandHandler(
         if (!validationResult.IsValid)
             throw new Domain.Exceptions.ValidationException(DomainErrors.Invalid);
 
-        var isPlacaUnique = await _repository.IsPlacaUniqueAsync(request.Placa, cancellationToken);
+        var isPlacaUnique = await _repository.IsLicensePlateUniqueAsync(request.Placa, cancellationToken);
 
         if (isPlacaUnique is true)
             throw new Domain.Exceptions.ValidationException(DomainErrors.Invalid);
 
-        var motorcycle = Motorcycle.Create(request.Identificador, request.Ano, request.Modelo, request.Placa);
+        var motorcycle = Motorcycle.Create(request.Ano, request.Modelo, request.Placa);
 
         await _repository.AddAsync(motorcycle, cancellationToken);
 

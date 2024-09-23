@@ -15,12 +15,12 @@ internal sealed class CreateRentalCommandHandler(
 {
     public async Task<Unit> Handle(CreateRentalCommand request, CancellationToken cancellationToken)
     {
-        var courier = await _courierRepository.FindByIdentificadorAsync(request.EntregadorId, cancellationToken);
+        var courier = await _courierRepository.GetByIdAsync(request.EntregadorId, cancellationToken);
 
         if (courier is null)
             throw new NotFoundException("Entregador não encontrado");
 
-        if (courier.TipoCNH is not "A")
+        if (courier.DrivingLicenseType is not "A")
             throw new ValidationException("Entregador precisa possuir apenas categoria A");
 
         var plan = _planRepository.GetByIdAsync(request.Plano, cancellationToken);
@@ -28,7 +28,7 @@ internal sealed class CreateRentalCommandHandler(
         if (plan is null)
             throw new NotFoundException("Plano não encontrado");
 
-        var motorcycle = await _motorcyleRepository.FindByIdentificadorAsync(request.MotoId, cancellationToken);
+        var motorcycle = await _motorcyleRepository.GetByIdAsync(request.MotoId, cancellationToken);
 
         if (motorcycle is null)
             throw new NotFoundException("Moto não encontrada");
