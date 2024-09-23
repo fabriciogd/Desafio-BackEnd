@@ -47,11 +47,10 @@ public class Repository<TEntity>(MotoDbContext _context) : IRepository<TEntity>
     /// <summary>
     /// Asynchronously retrieves a list of entities that match a given condition.
     /// </summary>
-    /// <param name="expression">A LINQ expression that defines the condition to filter the entities.</param>
     /// <param name="cancellationToken">Token used to cancel the operation if needed.</param>
     /// <returns>A list of entities that match the condition.</returns>
-    public Task<List<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken)
-        => _dbSet.Where(expression).ToListAsync(cancellationToken);
+    public Task<List<TEntity>> GetAllAsync(CancellationToken cancellationToken)
+        => _dbSet.ToListAsync(cancellationToken);
 
     #region Private
 

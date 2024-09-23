@@ -13,5 +13,5 @@ public interface IRepository<TEntity> where TEntity : BaseEntity
 
     Task<TEntity?> GetByIdAsync(int id, CancellationToken cancellationToken);
 
-    Task<List<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken);
+    Task<List<TEntity>> GetAllAsync(CancellationToken cancellationToken);
 }
