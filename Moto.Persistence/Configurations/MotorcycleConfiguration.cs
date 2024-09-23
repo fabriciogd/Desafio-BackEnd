@@ -5,6 +5,11 @@ using Moto.Persistence.Extensions;
 
 namespace Moto.Persistence.Configurations;
 
+/// <summary>
+/// Configures the entity properties and constraints for the Motorcycle entity.
+/// Implements the <see cref="IEntityTypeConfiguration{Motorcycle}"/> interface, 
+/// used by Entity Framework to configure the model via the Fluent API.
+/// </summary>
 internal sealed class MotorcycleConfiguration : IEntityTypeConfiguration<Motorcycle>
 {
     public void Configure(EntityTypeBuilder<Motorcycle> builder)

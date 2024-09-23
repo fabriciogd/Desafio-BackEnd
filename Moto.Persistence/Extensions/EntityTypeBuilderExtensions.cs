@@ -4,6 +4,11 @@ using Moto.Domain.Base;
 
 namespace Moto.Persistence.Extensions;
 
+/// <summary>
+/// This static class provides extension methods for configuring entities that inherit from <see cref="BaseEntity"/>.
+/// It is designed to centralize the configuration of common properties for all entities in the application,
+/// ensuring consistency across the database schema for base properties like Id and DomainEvents.
+/// </summary>
 internal static class EntityTypeBuilderExtensions
 {
     internal static void ConfigureBaseEntity<TEntity>(this EntityTypeBuilder<TEntity> builder)

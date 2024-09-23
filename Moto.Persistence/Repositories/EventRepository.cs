@@ -5,4 +5,4 @@ using Moto.Persistence.Contexts;
 
 namespace Moto.Persistence.Repositories;
 
-internal sealed class PlanRepository(MotoDbContext _context) : Repository<Plan>(_context), IPlanRepository;
+internal sealed class EventRepository(MotoDbContext _context) : Repository<Event>(_context), IEventRepository;

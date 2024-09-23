@@ -4,6 +4,11 @@ using Moto.Domain.Entities;
 
 namespace Moto.Persistence.Configurations;
 
+/// <summary>
+/// Configures the entity properties and constraints for the Plan entity.
+/// Implements the <see cref="IEntityTypeConfiguration{Plan}"/> interface, 
+/// used by Entity Framework to configure the model via the Fluent API.
+/// </summary>
 internal sealed class PlanConfiguration : IEntityTypeConfiguration<Plan>
 {
     public void Configure(EntityTypeBuilder<Plan> builder)

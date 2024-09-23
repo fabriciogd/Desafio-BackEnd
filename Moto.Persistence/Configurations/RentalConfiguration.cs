@@ -5,6 +5,11 @@ using Moto.Persistence.Extensions;
 
 namespace Moto.Persistence.Configurations;
 
+/// <summary>
+/// Configures the entity properties and constraints for the Rental entity.
+/// Implements the <see cref="IEntityTypeConfiguration{Rental}"/> interface, 
+/// used by Entity Framework to configure the model via the Fluent API.
+/// </summary>
 internal sealed class RentalConfiguration : IEntityTypeConfiguration<Rental>
 {
     public void Configure(EntityTypeBuilder<Rental> builder)

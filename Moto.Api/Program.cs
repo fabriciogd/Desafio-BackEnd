@@ -5,6 +5,8 @@ using System.Text.Json;
 using Moto.Infraestructure;
 using Serilog;
 using Moto.BackgroundTasks;
+using Microsoft.AspNetCore.Mvc.Formatters;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,7 +25,14 @@ builder.Services
     })
     .AddEndpointsApiExplorer()
     .AddSwaggerGen(x => x.EnableAnnotations())
-    .AddControllers()
+    .AddControllers(cfg =>
+    {
+        var noContentFormatter = cfg.OutputFormatters.OfType<HttpNoContentOutputFormatter>().FirstOrDefault();
+        if (noContentFormatter != null)
+        {
+            noContentFormatter.TreatNullValueAsNoContent = false;
+        }
+    })
     .AddJsonOptions(
         options =>
         {

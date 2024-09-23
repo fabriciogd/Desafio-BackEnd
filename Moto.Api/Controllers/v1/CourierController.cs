@@ -26,7 +26,7 @@ public class CourierController(IMediator mediator): ControllerBase
         {
             await mediator.Send(command, cancellationToken);
 
-            return Created();
+            return StatusCode(StatusCodes.Status201Created);
         }
         catch (ValidationException ex)
         {

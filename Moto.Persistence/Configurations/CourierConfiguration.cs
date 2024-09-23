@@ -5,6 +5,11 @@ using Moto.Persistence.Extensions;
 
 namespace Moto.Persistence.Configurations;
 
+/// <summary>
+/// Configures the entity properties and constraints for the Courier entity.
+/// Implements the <see cref="IEntityTypeConfiguration{Courier}"/> interface, 
+/// used by Entity Framework to configure the model via the Fluent API.
+/// </summary>
 internal sealed class CourierConfiguration : IEntityTypeConfiguration<Courier>
 {
     public void Configure(EntityTypeBuilder<Courier> builder)

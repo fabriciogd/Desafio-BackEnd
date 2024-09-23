@@ -28,7 +28,7 @@ public class RentalController(IMediator mediator) : ControllerBase
         {
             await mediator.Send(command, cancellationToken);
 
-            return Created();
+            return StatusCode(StatusCodes.Status201Created);
         }
         catch (Exception ex) when (ex is NotFoundException || ex is ValidationException)
         {

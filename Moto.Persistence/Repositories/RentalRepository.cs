@@ -7,7 +7,7 @@ using Moto.Persistence.Contexts;
 
 namespace Moto.Persistence.Repositories;
 
-public class RentalRepository(MotoDbContext _context) : Repository<Rental>(_context), IRentalRepository
+internal sealed class RentalRepository(MotoDbContext _context) : Repository<Rental>(_context), IRentalRepository
 {
     public async Task<bool> ExistsRentalInProgressToMotorcycleAsync(int motorcycleId, CancellationToken cancellationToken)
     {

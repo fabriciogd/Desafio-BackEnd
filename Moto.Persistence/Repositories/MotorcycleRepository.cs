@@ -6,7 +6,7 @@ using Moto.Persistence.Contexts;
 
 namespace Moto.Persistence.Repositories;
 
-public class MotorcycleRepository(MotoDbContext _context) : Repository<Motorcycle>(_context), IMotorcyleRepository
+internal sealed class MotorcycleRepository(MotoDbContext _context) : Repository<Motorcycle>(_context), IMotorcyleRepository
 {
     public async Task<bool> IsPlacaUniqueAsync(string? plate, CancellationToken cancellationToken)
     {
