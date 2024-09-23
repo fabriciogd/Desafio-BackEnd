@@ -18,7 +18,7 @@ public sealed class GetAllMotrocyclesHandler(
                 x.Id,
                 x.Year,
                 x.Model,
-                x.LicensePlate)
+                x.LicensePlate.Value)
             ).ToList();
 
         return Result.Success(response);

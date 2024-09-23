@@ -14,11 +14,5 @@ public sealed class MotorcycleValidator : AbstractValidator<Motorcycle>
         RuleFor(motorcycle => motorcycle.Model)
             .NotEmpty()
             .MaximumLength(50);
-
-        RuleFor(motorcycle => motorcycle.LicensePlate)
-            .NotEmpty()
-            .MaximumLength(8)
-            .MinimumLength(8)
-            .SetValidator(new LicensePlateValidator<Motorcycle>());
     }
 }

@@ -1,14 +1,12 @@
 ﻿using FluentValidation;
-using FluentValidation.Validators;
+using Moto.Domain.ValueObjects;
 using System.Text.RegularExpressions;
 
 namespace Moto.Domain.Validators;
 
-public class LicensePlateValidator<T> : IPropertyValidator<T, string>
+public sealed class LicensePlateValidator : AbstractValidator<LicensePlate>
 {
-    public string Name => "LicensePlateValidator";
-
-    public bool IsValid(ValidationContext<T> context, string value)
+    Func<string, bool> IsValid = (string value) =>
     {
         if (string.IsNullOrWhiteSpace(value)) { return false; }
 
@@ -26,7 +24,16 @@ public class LicensePlateValidator<T> : IPropertyValidator<T, string>
             var padraoNormal = new Regex("[a-zA-Z]{3}[0-9]{4}");
             return padraoNormal.IsMatch(value);
         }
+    };
+
+    public LicensePlateValidator()
+    {
+        RuleFor(licensePlate => licensePlate.Value)
+            .NotEmpty()
+            .MinimumLength(8)
+            .Must(IsValid)
+            .WithMessage("Placa está no formato incorreto")
+            .WithErrorCode("LicensePlateValidator");
     }
-    public string GetDefaultMessageTemplate(string errorCode)
-        => "'{PropertyName}' não é valida.";
 }
+

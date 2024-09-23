@@ -16,8 +16,10 @@ internal sealed class MotorcycleConfiguration : IEntityTypeConfiguration<Motorcy
     {
         builder.ConfigureBaseEntity();
 
-        builder.Property(x => x.LicensePlate)
-            .IsRequired()
+        builder.OwnsOne(x => x.LicensePlate)
+            .Property(x => x.Value)
+            .HasColumnName("LicensePlate")
+            .IsRequired(true)
             .HasMaxLength(8);
 
         builder.Property(x => x.Model)
@@ -28,6 +30,6 @@ internal sealed class MotorcycleConfiguration : IEntityTypeConfiguration<Motorcy
             .IsRequired()
             .HasMaxLength(50);
 
-        builder.HasIndex(x => x.LicensePlate).IsUnique();
+        builder.OwnsOne(x => x.LicensePlate).HasIndex(x => x.Value).IsUnique();
     }
 }

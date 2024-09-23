@@ -21,7 +21,7 @@ public sealed class GetMotorcycleByIdHandler(
             motorcycle.Id,
             motorcycle.Year,
             motorcycle.Model,
-            motorcycle.LicensePlate
+            motorcycle.LicensePlate.Value
         );
 
         return Result.Success(response);

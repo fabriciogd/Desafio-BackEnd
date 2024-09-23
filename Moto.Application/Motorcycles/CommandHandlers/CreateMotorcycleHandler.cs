@@ -4,6 +4,7 @@ using Moto.Application.Motorcycles.Commands;
 using Moto.Domain.Entities;
 using Moto.Domain.Primitives;
 using Moto.Domain.Repositories;
+using Moto.Domain.ValueObjects;
 
 namespace Moto.Application.Motorcycles.CommandHandlers;
 
@@ -18,7 +19,9 @@ public sealed class CreateMotorcycleHandler(
         if (licensePlateInUse)
             return Result.Conflict("Placa forneccida já esta em uso por outra moto");
 
-        var motorcycle = Motorcycle.Create(request.Ano, request.Modelo, request.Placa);
+        var licensePlate = LicensePlate.Create(request.Placa);
+
+        var motorcycle = Motorcycle.Create(request.Ano, request.Modelo, licensePlate);
 
         if (!motorcycle.IsValid)
             return Result.Invalid(motorcycle.Errors);

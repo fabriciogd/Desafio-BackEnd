@@ -11,7 +11,7 @@ internal sealed class MotorcycleRepository(MotoDbContext _context) : Repository<
     public async Task<bool> ExistsByLicensePlateAsync(string? licensePlate, CancellationToken cancellationToken)
     {
         return await _dbSet
-            .Where(x => x.LicensePlate.ToLower() == licensePlate.ToLower())
+            .Where(x => x.LicensePlate.Value.ToLower() == licensePlate.ToLower())
             .AsNoTracking()
             .AnyAsync(cancellationToken);
     }
@@ -21,7 +21,7 @@ internal sealed class MotorcycleRepository(MotoDbContext _context) : Repository<
         return await _dbSet
             .AsNoTracking()
             .Where(x => 
-                string.IsNullOrEmpty(plate) ?  true :  x.LicensePlate.ToLower() == plate.ToLower()
+                string.IsNullOrEmpty(plate) ?  true :  x.LicensePlate.Value.ToLower() == plate.ToLower()
             ).ToListAsync(cancellationToken);
     }
 }

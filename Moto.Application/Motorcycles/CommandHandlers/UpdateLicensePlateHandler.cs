@@ -4,6 +4,7 @@ using Moto.Application.Motorcycles.Commands;
 using Moto.Domain.Errors;
 using Moto.Domain.Primitives;
 using Moto.Domain.Repositories;
+using Moto.Domain.ValueObjects;
 
 namespace Moto.Application.Motorcycles.CommandHandlers;
 
@@ -23,7 +24,12 @@ public sealed class UpdateLicensePlateHandler(
         if (existsWithPlate is true)
             return Result.Conflict(DomainErrors.Motorcycle.AlreadyExists);
 
-        motorcycle.UpdateLicensePlate(request.Placa);
+        var licensePlate = LicensePlate.Create(request.Placa);
+
+        if (licensePlate.IsValid)
+            return Result.Invalid(licensePlate.Errors);
+
+        motorcycle.UpdateLicensePlate(licensePlate);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
