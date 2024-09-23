@@ -1,43 +1,42 @@
 ﻿using MediatR;
 using Moto.Application.Interfaces;
+using Moto.Application.Rentals.Commands;
 using Moto.Domain.Entities;
-using Moto.Domain.Exceptions;
+using Moto.Domain.Errors;
+using Moto.Domain.Primitives;
 using Moto.Domain.Repositories;
 
-namespace Moto.Application.Rents.CreateRent;
+namespace Moto.Application.Rentals.CommandHandlers;
 
-internal sealed class CreateRentalCommandHandler(
+internal sealed class CreateRentalHandler(
     ICourierRepository _courierRepository,
     IMotorcyleRepository _motorcyleRepository,
     IPlanRepository _planRepository,
     IRentalRepository _rentalRepository,
-    IUnitOfWork _unitOfWork) : IRequestHandler<CreateRentalCommand, Unit>
+    IUnitOfWork _unitOfWork) : IRequestHandler<CreateRental, Result>
 {
-    public async Task<Unit> Handle(CreateRentalCommand request, CancellationToken cancellationToken)
+    public async Task<Result> Handle(CreateRental request, CancellationToken cancellationToken)
     {
         var courier = await _courierRepository.GetByIdAsync(request.EntregadorId, cancellationToken);
 
         if (courier is null)
-            throw new NotFoundException("Entregador não encontrado");
-
-        if (courier.DrivingLicenseType is not "A")
-            throw new ValidationException("Entregador precisa possuir apenas categoria A");
+            return Result.NotFound(DomainErrors.Courier.NotFound);
 
         var plan = _planRepository.GetByIdAsync(request.Plano, cancellationToken);
 
         if (plan is null)
-            throw new NotFoundException("Plano não encontrado");
+            return Result.NotFound(DomainErrors.Plan.NotFound);
 
         var motorcycle = await _motorcyleRepository.GetByIdAsync(request.MotoId, cancellationToken);
 
         if (motorcycle is null)
-            throw new NotFoundException("Moto não encontrada");
+            return Result.NotFound(DomainErrors.Motorcycle.NotFound);
 
         var isMotorcycleRented = await _rentalRepository
             .ExistsRentalToMotorcycleAsync(motorcycle.Id, cancellationToken);
-    
+
         if (isMotorcycleRented)
-            throw new ValidationException("Moto ja está alugada");
+            return Result.Error(DomainErrors.Motorcycle.NotFound);
 
         var rental = Rental.Create(
             courier.Id,
@@ -48,10 +47,13 @@ internal sealed class CreateRentalCommandHandler(
             request.DataPrevisaoTermino
         );
 
+        if (!rental.IsValid)
+            return Result.Invalid(rental.Errors);
+
         await _rentalRepository.AddAsync(rental, cancellationToken);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-        return Unit.Value;
+        return Result.Created();
     }
 }

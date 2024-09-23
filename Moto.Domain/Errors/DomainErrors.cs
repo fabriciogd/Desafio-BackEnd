@@ -14,7 +14,13 @@
 
         public static class Courier
         {
+            public static string RequiredImage = "Imagem é obrigatória";
             public static string NotFound => "Entregador não encontrada";
+        }
+
+        public static class Plan
+        {
+            public static string NotFound => "Plano não encontrada";
         }
     }
 }

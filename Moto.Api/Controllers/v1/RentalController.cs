@@ -1,8 +1,9 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Moto.Api.Extensions;
 using Moto.Api.Models;
+using Moto.Application.Rentals.Commands;
 using Moto.Application.Rentals.CompleteRental;
-using Moto.Application.Rents.CreateRent;
 using Moto.Application.Rents.GetRental;
 using Moto.Application.Rents.Response;
 using Moto.Domain.Exceptions;
@@ -22,18 +23,11 @@ public class RentalController(IMediator mediator) : ControllerBase
     [SwaggerOperation("Alugar uma moto")]
     [SwaggerResponse(StatusCodes.Status201Created, "Locação efetuada com sucesso")]
     [SwaggerResponse(StatusCodes.Status400BadRequest, "Dados inválidos", typeof(ApiResponse))]
-    public async Task<IActionResult> Create([FromBody] CreateRentalCommand command, CancellationToken cancellationToken)
+    public async Task<IActionResult> Create([FromBody] CreateRental command, CancellationToken cancellationToken)
     {
-        try
-        {
-            await mediator.Send(command, cancellationToken);
+        var result = await mediator.Send(command, cancellationToken);
 
-            return StatusCode(StatusCodes.Status201Created);
-        }
-        catch (Exception ex) when (ex is NotFoundException || ex is ValidationException)
-        {
-            return BadRequest(ApiResponse.WithMessage("Dados inválidos"));
-        }
+        return result.ToActionResult();
     }
 
     [HttpPut("{id}/devolucao")]

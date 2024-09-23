@@ -22,4 +22,6 @@ public class Result: Result<Result>
         => new(ResultStatus.Invalid) { ValidationErrors = validationErrors };
 
     public static Result Conflict(params string[] errorMessages) => new(ResultStatus.Conflict) { Errors = errorMessages };
-    public static Result NotFound(params string[] errorMessages) => new(ResultStatus.NotFound) { Errors = errorMessages };}
+    public static Result NotFound(params string[] errorMessages) => new(ResultStatus.NotFound) { Errors = errorMessages };
+    public new static Result Error(string errorMessage) => new(ResultStatus.Error) { Errors = [errorMessage] };
+}

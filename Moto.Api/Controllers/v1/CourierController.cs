@@ -1,9 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Moto.Api.Extensions;
 using Moto.Api.Models;
-using Moto.Application.Couriers.CreateCourier;
-using Moto.Application.Couriers.UpdateCourier;
-using Moto.Domain.Exceptions;
+using Moto.Application.Couriers.Commands;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Net.Mime;
 
@@ -20,39 +19,23 @@ public class CourierController(IMediator mediator): ControllerBase
     [SwaggerOperation("Cadastrar entregador")]
     [SwaggerResponse(StatusCodes.Status201Created, "Entregador cadastrado com sucesso")]
     [SwaggerResponse(StatusCodes.Status400BadRequest, "Dados inválidos", typeof(ApiResponse))]
-    public async Task<IActionResult> Create([FromBody] CreateCourierCommand command, CancellationToken cancellationToken)
+    public async Task<IActionResult> Create([FromBody] CreateCourier command, CancellationToken cancellationToken)
     {
-        try
-        {
-            await mediator.Send(command, cancellationToken);
-
-            return StatusCode(StatusCodes.Status201Created);
-        }
-        catch (ValidationException ex)
-        {
-            return BadRequest(ApiResponse.WithMessage(ex.Message));
-        }
+        var result = await mediator.Send(command, cancellationToken);
+        return result.ToActionResult();
     }
 
-    [HttpPost("{id}/cnh")]
+    [HttpPut("{id}/cnh")]
     [Consumes(MediaTypeNames.Application.Json)]
     [Produces(MediaTypeNames.Application.Json)]
     [SwaggerOperation("Enviar foto da cnh")]
-    [SwaggerResponse(StatusCodes.Status201Created, "Foto cadastrada com sucesso")]
+    [SwaggerResponse(StatusCodes.Status200OK, "Foto atualizada com sucesso")]
     [SwaggerResponse(StatusCodes.Status400BadRequest, "Dados inválidos", typeof(ApiResponse))]
-    public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateCourierCommand command, CancellationToken cancellationToken)
+    public async Task<IActionResult> UpdateCnh([FromRoute] int id, [FromBody] UpdateCourierDrivingLicenseImage command, CancellationToken cancellationToken)
     {
         command = command with { Id = id };
 
-        try
-        {
-            await mediator.Send(command, cancellationToken);
-
-            return Created();
-        }
-        catch (ValidationException ex)
-        {
-            return BadRequest(ApiResponse.WithMessage(ex.Message));
-        }
+        var result = await mediator.Send(command, cancellationToken);
+        return result.ToActionResult();
     }
 }

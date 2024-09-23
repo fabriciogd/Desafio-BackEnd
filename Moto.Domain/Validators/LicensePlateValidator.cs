@@ -30,7 +30,7 @@ public sealed class LicensePlateValidator : AbstractValidator<LicensePlate>
     {
         RuleFor(licensePlate => licensePlate.Value)
             .NotEmpty()
-            .MinimumLength(8)
+            .MinimumLength(8).WithMessage("Placa deve conter o mínimo de 8 caracteres")
             .Must(IsValid)
             .WithMessage("Placa está no formato incorreto")
             .WithErrorCode("LicensePlateValidator");

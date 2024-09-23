@@ -16,16 +16,20 @@ internal sealed class CourierConfiguration : IEntityTypeConfiguration<Courier>
     {
         builder.ConfigureBaseEntity();
 
-        builder.Property(x => x.Cnpj)
-            .IsRequired()
-            .HasMaxLength(14);
+        builder.OwnsOne(x => x.Cnpj)
+             .Property(x => x.Value)
+             .HasColumnName("Cnpj")
+             .IsRequired()
+             .HasMaxLength(14);
 
         builder.Property(x => x.BirthDate)
             .IsRequired();
 
-        builder.Property(x => x.DrivingLicense)
+        builder.OwnsOne(x => x.DrivingLicense)
+            .Property(x => x.Value)
+            .HasColumnName("DrivingLicense")
             .IsRequired()
-            .HasMaxLength(9);
+            .HasMaxLength(11);
 
         builder.Property(x => x.DrivingLicenseType)
             .IsRequired()
@@ -34,7 +38,7 @@ internal sealed class CourierConfiguration : IEntityTypeConfiguration<Courier>
         builder.Property(x => x.DrivingLicenseImagePath)
             .HasMaxLength(256);
 
-        builder.HasIndex(x => x.Cnpj).IsUnique();
-        builder.HasIndex(x => x.DrivingLicense).IsUnique();
+        builder.OwnsOne(x => x.Cnpj).HasIndex(x => x.Value).IsUnique();
+        builder.OwnsOne(x => x.DrivingLicense).HasIndex(x => x.Value).IsUnique();
     }
 }

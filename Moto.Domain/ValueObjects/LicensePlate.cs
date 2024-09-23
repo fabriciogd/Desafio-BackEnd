@@ -13,7 +13,7 @@ public class LicensePlate : ValueObject
     }
 
     public string? Value { get; private set; }
-    public static LicensePlate Create(string? value) => new LicensePlate(value);
+    public static LicensePlate Create(string? value) => new(value);
 
     protected override bool Validate()
     {
