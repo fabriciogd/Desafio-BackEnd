@@ -9,6 +9,7 @@ public sealed class Motorcycle: BaseEntity
     public short Ano { get; private set; }
     public string? Modelo { get; private set; }
     public string? Placa { get; private set; }
+
     public Motorcycle()
     {
 

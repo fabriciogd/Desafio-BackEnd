@@ -4,6 +4,7 @@ using Moto.Application;
 using System.Text.Json;
 using Moto.Infraestructure;
 using Serilog;
+using Moto.BackgroundTasks;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,7 +34,8 @@ builder.Services
     .AddServices(builder.Configuration)
     .AddPersistence(builder.Configuration)
     .AddRepositories()
-    .AddCommandHandlers();
+    .AddCommandHandlers()
+    .AddBackgroundTasks(builder.Configuration);
 
 builder.Host.UseDefaultServiceProvider((context, serviceProviderOptions) =>
 {

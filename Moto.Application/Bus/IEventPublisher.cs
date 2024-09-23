@@ -1,6 +1,8 @@
-﻿namespace Moto.Application.Bus;
+﻿using Moto.Application.Base;
+
+namespace Moto.Application.Bus;
 
 public interface IEventPublisher
 {
-    void Publish<T>(string queueName, T @event);
+    void Publish(IIntegrationEvent @event);
 }

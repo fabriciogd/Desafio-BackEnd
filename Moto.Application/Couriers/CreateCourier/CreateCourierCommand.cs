@@ -5,7 +5,7 @@ namespace Moto.Application.Couriers.CreateCourier;
 public sealed record CreateCourierCommand(
     string? Identificador,
     string? CNPJ,
-    DateOnly DataNascimento,
+    DateTime DataNascimento,
     string? NumeroCNH,
     string? TipoCNH,
     string ImagemCNH) : IRequest<Unit>;

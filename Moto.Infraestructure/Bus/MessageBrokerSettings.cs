@@ -28,7 +28,7 @@ public sealed class MessageBrokerSettings
     public string Password { get; set; }
 
     /// <summary>
-    /// Gets or sets the exchange.
+    /// Gets or sets the queue name.
     /// </summary>
-    public string ExchangeName { get; set; }
+    public string QueueName { get; set; }
 }

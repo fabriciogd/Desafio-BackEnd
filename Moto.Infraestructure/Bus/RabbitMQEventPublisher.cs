@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.Options;
+using Moto.Application.Base;
 using Moto.Application.Bus;
+using Newtonsoft.Json;
 using RabbitMQ.Client;
 using System.Text;
 using System.Text.Json;
@@ -28,21 +30,19 @@ internal sealed class RabbitMQEventPublisher : IEventPublisher, IDisposable
 
         _channel = _connection.CreateModel();
 
-        _channel.ExchangeDeclare(exchange: _messageBrokerSettings.ExchangeName, type: ExchangeType.Direct);
+        _channel.QueueDeclare(_messageBrokerSettings.QueueName, false, false, false);
     }
 
-    public void Publish<T>(string queueName, T @event)
+    public void Publish(IIntegrationEvent @event)
     {
-        _channel.QueueDeclare(queueName, true, false, false);
-
-        string payload = JsonSerializer.Serialize(@event, new JsonSerializerOptions
+        string payload = JsonConvert.SerializeObject(@event, typeof(IIntegrationEvent), new JsonSerializerSettings
         {
-            PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower
+            TypeNameHandling = TypeNameHandling.Auto
         });
 
         byte[] body = Encoding.UTF8.GetBytes(payload);
 
-        _channel.BasicPublish(_messageBrokerSettings.ExchangeName, routingKey: queueName, body: body);
+        _channel.BasicPublish(string.Empty, _messageBrokerSettings.QueueName, body: body);
     }
 
     public void Dispose()

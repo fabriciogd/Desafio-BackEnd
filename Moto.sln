@@ -15,7 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Moto.Persistence", "Moto.Pe
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{A24CEE69-7D3C-4E98-8D93-74DF87A22307}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Moto.Application.UnitTest", "Moto.Application.UnitTest\Moto.Application.UnitTest.csproj", "{E530F2CA-DB57-43D7-A148-378F141C3F4A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Moto.Application.UnitTest", "Moto.Application.UnitTest\Moto.Application.UnitTest.csproj", "{E530F2CA-DB57-43D7-A148-378F141C3F4A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Moto.BackgroundTasks", "BackgroundTasks\Moto.BackgroundTasks.csproj", "{BBCA447E-1D3D-42C2-B04A-F2E76F92CBA1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,6 +49,10 @@ Global
 		{E530F2CA-DB57-43D7-A148-378F141C3F4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E530F2CA-DB57-43D7-A148-378F141C3F4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E530F2CA-DB57-43D7-A148-378F141C3F4A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BBCA447E-1D3D-42C2-B04A-F2E76F92CBA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBCA447E-1D3D-42C2-B04A-F2E76F92CBA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBCA447E-1D3D-42C2-B04A-F2E76F92CBA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBCA447E-1D3D-42C2-B04A-F2E76F92CBA1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
