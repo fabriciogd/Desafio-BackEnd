@@ -8,7 +8,7 @@ namespace Moto.Persistence.Repositories;
 
 internal sealed class MotorcycleRepository(MotoDbContext _context) : Repository<Motorcycle>(_context), IMotorcyleRepository
 {
-    public async Task<bool> IsLicensePlateUniqueAsync(string? licensePlate, CancellationToken cancellationToken)
+    public async Task<bool> ExistsByLicensePlateAsync(string? licensePlate, CancellationToken cancellationToken)
     {
         return await _dbSet
             .Where(x => x.LicensePlate.ToLower() == licensePlate.ToLower())

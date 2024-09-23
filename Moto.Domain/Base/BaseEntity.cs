@@ -1,4 +1,8 @@
-﻿namespace Moto.Domain.Base;
+﻿using FluentValidation;
+using Moto.Domain.Extensions;
+using Moto.Domain.Primitives;
+
+namespace Moto.Domain.Base;
 
 public abstract class BaseEntity
 {
@@ -14,4 +18,22 @@ public abstract class BaseEntity
 
     public void ClearDomainEvents() =>
         _domainEvents.Clear();
+
+    public List<ValidationError> Errors = new();
+
+    protected void AddErrors(IReadOnlyCollection<ValidationError> errors)
+       => Errors.AddRange(errors);
+
+    protected bool OnValidate<TValidator, TEntity>()
+        where TValidator : AbstractValidator<TEntity>, new()
+        where TEntity : BaseEntity
+    {
+        var validationResult = new TValidator().Validate(this as TEntity);
+        AddErrors(validationResult.AsErrors());
+
+        return validationResult.IsValid;
+    }
+    public bool IsValid => Errors.Count == 0;
+
+    protected abstract bool Validate();
 }

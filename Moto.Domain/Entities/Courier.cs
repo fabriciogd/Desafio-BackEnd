@@ -2,7 +2,7 @@
 
 namespace Moto.Domain.Entities;
 
-public sealed class Courier: BaseEntity
+public sealed class Courier : BaseEntity
 {
     public string? Cnpj { get; private set; }
     public DateTime BirthDate { get; private set; }
@@ -22,4 +22,9 @@ public sealed class Courier: BaseEntity
             new Courier(cnpj, birthDate, drivingLicense, drivingLicenseType);
 
     public void UpdateDrivingLicenseImagePath(string drivingLicenseImagePath) => DrivingLicenseImagePath = drivingLicenseImagePath;
+
+    protected override bool Validate()
+    {
+        throw new NotImplementedException();
+    }
 }

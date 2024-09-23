@@ -9,7 +9,7 @@ namespace Moto.Persistence.Repositories;
 
 internal sealed class RentalRepository(MotoDbContext _context) : Repository<Rental>(_context), IRentalRepository
 {
-    public async Task<bool> ExistsRentalInProgressToMotorcycleAsync(int motorcycleId, CancellationToken cancellationToken)
+    public async Task<bool> ExistsRentalToMotorcycleAsync(int motorcycleId, CancellationToken cancellationToken)
     {
         return await _dbSet.Where(x => 
             x.Status == RentStatusEnum.InProgress && 

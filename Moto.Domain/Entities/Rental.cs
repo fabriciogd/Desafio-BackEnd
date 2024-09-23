@@ -77,4 +77,9 @@ public class Rental : BaseEntity
 
         return Plan.CostPerDay * totalDays;
     }
+
+    protected override bool Validate()
+    {
+        throw new NotImplementedException();
+    }
 }

@@ -34,7 +34,7 @@ internal sealed class CreateRentalCommandHandler(
             throw new NotFoundException("Moto não encontrada");
 
         var isMotorcycleRented = await _rentalRepository
-            .ExistsRentalInProgressToMotorcycleAsync(motorcycle.Id, cancellationToken);
+            .ExistsRentalToMotorcycleAsync(motorcycle.Id, cancellationToken);
     
         if (isMotorcycleRented)
             throw new ValidationException("Moto ja está alugada");

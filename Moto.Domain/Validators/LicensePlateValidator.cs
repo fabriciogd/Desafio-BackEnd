@@ -2,11 +2,11 @@
 using FluentValidation.Validators;
 using System.Text.RegularExpressions;
 
-namespace Moto.Application.Validators;
+namespace Moto.Domain.Validators;
 
 public class LicensePlateValidator<T> : IPropertyValidator<T, string>
 {
-    public string Name => "PlateValidator";
+    public string Name => "LicensePlateValidator";
 
     public bool IsValid(ValidationContext<T> context, string value)
     {

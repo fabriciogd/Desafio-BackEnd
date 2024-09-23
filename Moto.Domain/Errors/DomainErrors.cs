@@ -7,6 +7,9 @@
         public static class Motorcycle
         {
             public static string NotFound => "Moto não encontrada";
+            public static string AlreadyExists => "Placa já esta sendo utilizada por outra moto";
+
+            public static string InUse = "Moto já possuí algum contrato de locação";
         }
 
         public static class Courier

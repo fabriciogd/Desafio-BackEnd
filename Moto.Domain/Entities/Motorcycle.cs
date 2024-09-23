@@ -1,5 +1,6 @@
 ﻿using Moto.Domain.Base;
 using Moto.Domain.Events;
+using Moto.Domain.Validators;
 
 namespace Moto.Domain.Entities;
 
@@ -15,6 +16,8 @@ public sealed class Motorcycle: BaseEntity
         Model = model;
         LicensePlate = licensePlate;
 
+        Validate();
+
         AddDomainEvent(new MotorcycleCreatedEvent(year, model, licensePlate));
     }
 
@@ -22,4 +25,9 @@ public sealed class Motorcycle: BaseEntity
             new Motorcycle(year, model, licensePlate);
 
     public void UpdateLicensePlate(string licensePlate) => LicensePlate = licensePlate;
+
+    protected override bool Validate()
+    {
+        return OnValidate<MotorcycleValidator, Motorcycle>();
+    }
 }

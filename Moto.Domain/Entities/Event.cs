@@ -21,4 +21,9 @@ public class Event : BaseEntity
     {
         return new Event(name, data);
     }
+
+    protected override bool Validate()
+    {
+        throw new NotImplementedException();
+    }
 }

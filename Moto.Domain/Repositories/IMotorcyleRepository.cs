@@ -7,5 +7,5 @@ public interface IMotorcyleRepository : IRepository<Motorcycle>
 {
     Task<List<Motorcycle>> ListAllAsync(string? plate, CancellationToken cancellationToken);
 
-    Task<bool> IsLicensePlateUniqueAsync(string? licensePlate, CancellationToken cancellationToken);
+    Task<bool> ExistsByLicensePlateAsync(string? licensePlate, CancellationToken cancellationToken);
 }

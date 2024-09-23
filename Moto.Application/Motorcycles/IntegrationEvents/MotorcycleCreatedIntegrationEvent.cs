@@ -3,10 +3,10 @@ using Moto.Domain.Events;
 using System.Reflection;
 using System.Text.Json.Serialization;
 
-namespace Moto.Application.Motorcycles.CreatedMotorcycle;
+namespace Moto.Application.Motorcycles.IntegrationEvents;
 
 public sealed class MotorcycleCreatedIntegrationEvent : IIntegrationEvent
-{ 
+{
     public int Year { get; set; }
 
     public string? Model { get; set; }

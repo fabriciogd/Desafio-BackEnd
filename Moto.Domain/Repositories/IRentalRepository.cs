@@ -5,5 +5,5 @@ namespace Moto.Domain.Repositories;
 
 public interface IRentalRepository: IRepository<Rental>
 {
-    Task<bool> ExistsRentalInProgressToMotorcycleAsync(int motorcycleId, CancellationToken cancellationToken);
+    Task<bool> ExistsRentalToMotorcycleAsync(int motorcycleId, CancellationToken cancellationToken);
 }
