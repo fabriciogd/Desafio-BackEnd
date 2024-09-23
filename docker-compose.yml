@@ -22,7 +22,7 @@ services:
       PGADMIN_DEFAULT_EMAIL: user@localhost.com
       PGADMIN_DEFAULT_PASSWORD: password
     ports:
-      - 8080:80
+      - 8082:80
     volumes:
       - ./data/pgadmin:/var/lib/pgadmin
       
@@ -34,14 +34,30 @@ services:
       - ACCEPT_EULA=Y
     ports:
       - 5341:5341
-      - 8081:80
+      - 8032:80
 
   moto-rabbitmq:
     image: rabbitmq:3-management-alpine
-    container_name: 'rabbitmq'
+    container_name: 'moto-rabbitmq'
     restart: always
     ports:
       - 5672:5672
       - 15672:15672
     volumes:
       - ./data/rabbitmq:/var/lib/rabbitmq
+
+  application:
+    build:
+      context: .
+    container_name: moto
+    restart: always
+    ports:
+      - 8080:8080
+      - 8081:8081
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      DOTNET_ENVIRONMENT: Development
+    depends_on:
+      - moto-postgres
+      - moto-seq
+      - moto-rabbitmq

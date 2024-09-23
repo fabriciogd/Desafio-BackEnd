@@ -7,6 +7,9 @@ using Serilog;
 using Moto.BackgroundTasks;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Hosting;
+using Moto.Persistence.Contexts;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -63,5 +66,11 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.MapControllers();
+
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<MotoDbContext>();
+    db.Database.Migrate();
+}
 
 app.Run();
