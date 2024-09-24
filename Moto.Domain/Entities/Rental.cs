@@ -1,12 +1,12 @@
 ﻿using Moto.Domain.Base;
 using Moto.Domain.Enums;
-using Moto.Domain.Exceptions;
+using Moto.Domain.Validators;
 
 namespace Moto.Domain.Entities;
 
 public class Rental : BaseEntity
 {
-    public int CourierId { get; private set; }  
+    public int CourierId { get; private set; }
 
     public int MotorcycleId { get; private set; }
 
@@ -15,7 +15,7 @@ public class Rental : BaseEntity
     public DateTime StartDate { get; private set; }
 
     public DateTime EndDate { get; private set; }
-    
+
     public DateTime ExpectedEndDate { get; private set; }
 
     public RentStatusEnum Status { get; private set; }
@@ -28,7 +28,13 @@ public class Rental : BaseEntity
 
     public virtual Courier Courier { get; private set; }
 
-    private Rental(int courierId, int motorcycleId, int planId, DateTime startDate, DateTime endDate, DateTime expectedEndDate)
+    private Rental(
+        int courierId,
+        int motorcycleId,
+        int planId,
+        DateTime startDate,
+        DateTime endDate,
+        DateTime expectedEndDate)
     {
         CourierId = courierId;
         MotorcycleId = motorcycleId;
@@ -36,6 +42,8 @@ public class Rental : BaseEntity
         StartDate = startDate;
         EndDate = endDate;
         ExpectedEndDate = expectedEndDate;
+
+        Validate();
     }
 
     public static Rental Create(
@@ -44,16 +52,15 @@ public class Rental : BaseEntity
         int planId,
         DateTime startDate,
         DateTime endDate,
-        DateTime expectedEndDate) => 
-            new Rental(courierId, motorcycleId, planId, DateTime.Now.AddDays(1), endDate, expectedEndDate);
+        DateTime expectedEndDate) =>
+            new(courierId, motorcycleId, planId, DateTime.Now.AddDays(1), endDate, expectedEndDate);
 
     public void Complete(DateTime endDate)
     {
         EndDate = endDate;
         Status = RentStatusEnum.Finished;
 
-        if (EndDate <= StartDate)
-            throw new ValidationException("Data não pode ser menor que data de inicio");
+        Validate();
 
         TotalPayment = CalculateBaseCoast() + CalculateFee();
     }
@@ -80,6 +87,6 @@ public class Rental : BaseEntity
 
     protected override bool Validate()
     {
-        throw new NotImplementedException();
+        return OnValidate<RentalValidator, Rental>();
     }
 }

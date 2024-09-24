@@ -5,7 +5,7 @@ services:
     container_name: moto-postgres
     restart: always
     environment:
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_PASSWORD: password
       POSTGRES_USER: postgres
     ports:
       - 5432:5432
@@ -34,7 +34,7 @@ services:
       - ACCEPT_EULA=Y
     ports:
       - 5341:5341
-      - 8032:80
+      - 8083:80
 
   moto-rabbitmq:
     image: rabbitmq:3-management-alpine

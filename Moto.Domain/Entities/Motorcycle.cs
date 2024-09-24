@@ -25,7 +25,7 @@ public sealed class Motorcycle: BaseEntity
         Validate();
         AddErrors(licensePlate.Errors);
 
-        AddDomainEvent(new MotorcycleCreatedEvent(year, model, licensePlate.Value));
+        AddDomainEvent(new MotorcycleCreatedEvent(this));
     }
 
     public static Motorcycle Create(short year, string? model, LicensePlate licensePlate) =>

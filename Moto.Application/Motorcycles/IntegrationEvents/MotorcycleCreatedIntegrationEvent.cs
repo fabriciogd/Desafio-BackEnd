@@ -1,12 +1,12 @@
 ﻿using Moto.Application.Base;
 using Moto.Domain.Events;
-using System.Reflection;
 using System.Text.Json.Serialization;
 
 namespace Moto.Application.Motorcycles.IntegrationEvents;
 
 public sealed class MotorcycleCreatedIntegrationEvent : IIntegrationEvent
 {
+    public int Id { get; set; }
     public int Year { get; set; }
 
     public string? Model { get; set; }
@@ -15,14 +15,16 @@ public sealed class MotorcycleCreatedIntegrationEvent : IIntegrationEvent
 
     internal MotorcycleCreatedIntegrationEvent(MotorcycleCreatedEvent motorcycleCreatedEvent)
     {
-        Year = motorcycleCreatedEvent.Year;
-        Model = motorcycleCreatedEvent.Model;
-        LicensePlate = motorcycleCreatedEvent.LicensePlate;
+        Id = motorcycleCreatedEvent.Motorcycle.Id;
+        Year = motorcycleCreatedEvent.Motorcycle.Year;
+        Model = motorcycleCreatedEvent.Motorcycle.Model;
+        LicensePlate = motorcycleCreatedEvent.Motorcycle.LicensePlate;
     }
 
     [JsonConstructor]
-    public MotorcycleCreatedIntegrationEvent(int year, string? model, string? licensePlate)
+    public MotorcycleCreatedIntegrationEvent(int id, int year, string? model, string? licensePlate)
     {
+        Id = id;
         Year = year;
         Model = model;
         LicensePlate = licensePlate;

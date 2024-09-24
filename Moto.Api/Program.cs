@@ -1,15 +1,13 @@
 using Microsoft.AspNetCore.Mvc;
-using Moto.Persistence;
-using Moto.Application;
-using System.Text.Json;
-using Moto.Infraestructure;
-using Serilog;
-using Moto.BackgroundTasks;
 using Microsoft.AspNetCore.Mvc.Formatters;
-using Microsoft.Extensions.Options;
-using Microsoft.Extensions.Hosting;
-using Moto.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
+using Moto.Application;
+using Moto.Infraestructure;
+using Moto.Persistence;
+using Moto.Persistence.Contexts;
+using Serilog;
+using System.Text.Json;
+using Moto.BackgroundTasks;
 
 var builder = WebApplication.CreateBuilder(args);
 

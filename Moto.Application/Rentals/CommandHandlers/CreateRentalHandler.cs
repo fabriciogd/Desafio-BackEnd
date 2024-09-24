@@ -36,7 +36,7 @@ internal sealed class CreateRentalHandler(
             .ExistsRentalToMotorcycleAsync(motorcycle.Id, cancellationToken);
 
         if (isMotorcycleRented)
-            return Result.Error(DomainErrors.Motorcycle.NotFound);
+            return Result.Error(DomainErrors.Motorcycle.InUse);
 
         var rental = Rental.Create(
             courier.Id,

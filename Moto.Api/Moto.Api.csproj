@@ -26,8 +26,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BackgroundTasks\Moto.BackgroundTasks.csproj" />
     <ProjectReference Include="..\Moto.Application\Moto.Application.csproj" />
+    <ProjectReference Include="..\Moto.BackgroundTasks\Moto.BackgroundTasks.csproj" />
     <ProjectReference Include="..\Moto.Infraestructure\Moto.Infraestructure.csproj" />
     <ProjectReference Include="..\Moto.Persistence\Moto.Persistence.csproj" />
   </ItemGroup>

@@ -3,10 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Moto.Api.Extensions;
 using Moto.Api.Models;
 using Moto.Application.Rentals.Commands;
-using Moto.Application.Rentals.CompleteRental;
-using Moto.Application.Rents.GetRental;
-using Moto.Application.Rents.Response;
-using Moto.Domain.Exceptions;
+using Moto.Application.Rentals.Queries;
+using Moto.Application.Rents.Responses;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Net.Mime;
 
@@ -26,7 +24,6 @@ public class RentalController(IMediator mediator) : ControllerBase
     public async Task<IActionResult> Create([FromBody] CreateRental command, CancellationToken cancellationToken)
     {
         var result = await mediator.Send(command, cancellationToken);
-
         return result.ToActionResult();
     }
 
@@ -34,46 +31,26 @@ public class RentalController(IMediator mediator) : ControllerBase
     [Consumes(MediaTypeNames.Application.Json)]
     [Produces(MediaTypeNames.Application.Json)]
     [SwaggerOperation("Informar data de devolução e calcular valor")]
-    [SwaggerResponse(StatusCodes.Status200OK, "Data de devolução informada com sucesso", typeof(RentalResponse))]
+    [SwaggerResponse(StatusCodes.Status200OK, "Data de devolução informada com sucesso", typeof(ApiResponse))]
     [SwaggerResponse(StatusCodes.Status404NotFound, "Locação não encontrada", typeof(ApiResponse))]
     [SwaggerResponse(StatusCodes.Status400BadRequest, "Dados inválidos", typeof(ApiResponse))]
-    public async Task<IActionResult> Complete([FromRoute] int id, [FromBody] CompleteRentalCommand command, CancellationToken cancellationToken)
+    public async Task<IActionResult> Complete([FromRoute] int id, [FromBody] CompleteRental command, CancellationToken cancellationToken)
     {
         command = command with { Id = id };
 
-        try
-        {
-            var response = await mediator.Send(command, cancellationToken);
-
-            return Ok(response);
-        }
-        catch (NotFoundException ex)
-        {
-            return NotFound(ApiResponse.WithMessage(ex.Message));
-        }
-        catch(ValidationException ex)
-        {
-            return BadRequest(ApiResponse.WithMessage("Dados inválidos"));
-        }
+        var result = await mediator.Send(command, cancellationToken);
+        return result.ToActionResult();
     }
 
     [HttpGet("{id}")]
     [Consumes(MediaTypeNames.Application.Json)]
     [Produces(MediaTypeNames.Application.Json)]
     [SwaggerOperation("Consultar moto existente por id")]
-    [SwaggerResponse(StatusCodes.Status200OK, "Detalhes da locação", typeof(RentalResponse))]
+    [SwaggerResponse(StatusCodes.Status200OK, "Detalhes da locação", typeof(ApiResponse<RentalResponse>))]
     [SwaggerResponse(StatusCodes.Status404NotFound, "Dados não encontrado", typeof(ApiResponse))]
-    public async Task<IActionResult> Get([FromRoute] GetRentalCommand command, CancellationToken cancellationToken)
+    public async Task<IActionResult> Get([FromRoute] GetRentalById command, CancellationToken cancellationToken)
     {
-        try
-        {
-            var response = await mediator.Send(command, cancellationToken);
-
-            return Ok(response);
-        }
-        catch (NotFoundException ex)
-        {
-            return NotFound(ApiResponse.WithMessage(ex.Message));
-        }
+        var result = await mediator.Send(command, cancellationToken);
+        return result.ToActionResult();
     }
 }
