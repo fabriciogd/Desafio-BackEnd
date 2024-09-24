@@ -57,7 +57,7 @@ public sealed class CreateCourierHandler(
         {
             var (isValid, extension) = _fileExtensionChecker.Validate(request.ImagemCnh, "png", "bmp");
 
-            if (isValid)
+            if (!isValid)
             {
                 _logger.LogError("Driving license image invalid");
 

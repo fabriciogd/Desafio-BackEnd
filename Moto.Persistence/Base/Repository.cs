@@ -2,7 +2,6 @@
 using Moto.Domain.Base;
 using Moto.Domain.Interfaces;
 using Moto.Persistence.Contexts;
-using System.Linq.Expressions;
 
 namespace Moto.Persistence.Base;
 
@@ -30,7 +29,7 @@ public class Repository<TEntity>(MotoDbContext _context) : IRepository<TEntity>
     /// <param name="cancellationToken">Token used to cancel the operation if needed.</param>
     /// <returns>The entity if found, otherwise null.</returns>
     public async Task<TEntity?> GetByIdAsync(int id, CancellationToken cancellationToken) 
-        => await GetByIdCompiledAsync(_context, id, cancellationToken);
+        => await _dbSet.FirstOrDefaultAsync(entity => entity.Id.Equals(id), cancellationToken);
 
     /// <summary>
     /// Removes the specified entity from the database.
@@ -50,16 +49,5 @@ public class Repository<TEntity>(MotoDbContext _context) : IRepository<TEntity>
     /// <param name="cancellationToken">Token used to cancel the operation if needed.</param>
     /// <returns>A list of entities that match the condition.</returns>
     public Task<List<TEntity>> GetAllAsync(CancellationToken cancellationToken)
-        => _dbSet.ToListAsync(cancellationToken);
-
-    #region Private
-
-    private static readonly Func<MotoDbContext, int, CancellationToken, Task<TEntity?>> GetByIdCompiledAsync =
-        EF.CompileAsyncQuery((MotoDbContext context, int id, CancellationToken cancellationToken) =>
-            context
-                .Set<TEntity>()
-                .AsNoTrackingWithIdentityResolution()
-                .FirstOrDefault(entity => entity.Id.Equals(id)));
-
-    #endregion
+        => _dbSet.AsNoTracking().ToListAsync(cancellationToken);
 }

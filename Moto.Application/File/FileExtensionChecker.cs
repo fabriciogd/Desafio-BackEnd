@@ -4,30 +4,42 @@
     {
         public (bool, string) Validate(string base64, params string[] extensions)
         {
-            if (string.IsNullOrEmpty(base64))
-                return (false, string.Empty);
+            byte[] imageBytes = Convert.FromBase64String(base64);
 
-            var extension = GetFileExtension(base64);
-            return (extensions.Contains(extension), extension);
-        }
-
-        private string GetFileExtension(string base64String)
-        {
-            var data = base64String.Substring(0, 5);
-
-            return data.ToUpper() switch
+            foreach (var entry in SignatureToExtensionMap)
             {
-                "IVBOR" => "png",
-                "/9J/4" => "jpg",
-                "AAAAF" => "mp4",
-                "JVBER" => "pdf",
-                "AAABA" => "ico",
-                "UMFYI" => "rar",
-                "E1XYD" => "rtf",
-                "U1PKC" => "txt",
-                "MQOWM" or "77U/M" => "srt",
-                _ => string.Empty,
-            };
+                byte[] signature = entry.Key;
+
+                if (imageBytes.Length >= signature.Length)
+                {
+                    bool isMatch = true;
+                    for (int i = 0; i < signature.Length; i++)
+                    {
+                        if (imageBytes[i] != signature[i])
+                        {
+                            isMatch = false;
+                            break;
+                        }
+                    }
+                    if (isMatch)
+                    {
+                        return (true, entry.Value);
+                    }
+                }
+            }
+
+            return (false, string.Empty);
         }
+
+
+        private static readonly Dictionary<byte[], string> SignatureToExtensionMap = new Dictionary<byte[], string>
+        {
+            //{ new byte[] { 0xFF, 0xD8, 0xFF }, ".jpg" }, // JPEG
+            { new byte[] { 0x89, 0x50, 0x4E, 0x47 }, ".png" }, // PNG
+            //{ new byte[] { 0x47, 0x49, 0x46, 0x38 }, ".gif" }, // GIF
+            { new byte[] { 0x42, 0x4D }, ".bmp" }, // BMP
+            //{ new byte[] { 0x49, 0x20, 0x49, 0x43 }, ".tiff" }, // TIFF
+            //{ new byte[] { 0x52, 0x49, 0x46, 0x46 }, ".webp" }, // WEBP
+        };
     }
 }

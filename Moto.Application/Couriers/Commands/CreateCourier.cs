@@ -14,7 +14,7 @@ namespace Moto.Application.Couriers.Commands;
 /// <param name="ImagemCnh">The image of the courier's driver's license.</param>
 public sealed record CreateCourier(
     string? Cnpj,
-    DateTime DataNascimento,
+    DateOnly DataNascimento,
     string? NumeroCnh,
     string? TipoCnh,
     string? ImagemCnh) : IRequest<Result>;

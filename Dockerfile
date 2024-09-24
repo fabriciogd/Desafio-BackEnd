@@ -12,7 +12,7 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Development
 WORKDIR /src
 COPY ["Moto.Api/Moto.Api.csproj", "Moto.Api/"]
-COPY ["BackgroundTasks/Moto.BackgroundTasks.csproj", "BackgroundTasks/"]
+COPY ["Moto.BackgroundTasks/Moto.BackgroundTasks.csproj", "BackgroundTasks/"]
 COPY ["Moto.Infraestructure/Moto.Infraestructure.csproj", "Moto.Infraestructure/"]
 COPY ["Moto.Application/Moto.Application.csproj", "Moto.Application/"]
 COPY ["Moto.Domain/Moto.Domain.csproj", "Moto.Domain/"]

@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Moto.Domain.Primitives;
+using System.Text.Json.Serialization;
 
 namespace Moto.Application.Rentals.Commands;
 
@@ -9,4 +10,4 @@ namespace Moto.Application.Rentals.Commands;
 /// </summary>
 /// <param name="Id">The unique identifier of the rental to be completed.</param>
 /// <param name="dataDevolucao">The date when the rented motorcycle is returned.</param>
-public sealed record CompleteRental(int Id, DateTime dataDevolucao) : IRequest<Result>;
+public sealed record CompleteRental([property: JsonIgnore] int Id, DateOnly dataDevolucao) : IRequest<Result>;

@@ -23,7 +23,7 @@ public sealed class LocalFileStorageService : IFileStorageService
         if (!Directory.Exists(path))
             Directory.CreateDirectory(path);
 
-        path = Path.Combine(path, $"{fileName}.{extension}");
+        path = Path.Combine(path, $"{fileName}{extension}");
 
         using (var fs = new FileStream(path, FileMode.OpenOrCreate, FileAccess.ReadWrite))
         {

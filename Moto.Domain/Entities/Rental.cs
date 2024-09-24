@@ -12,11 +12,11 @@ public class Rental : BaseEntity
 
     public int PlanId { get; private set; }
 
-    public DateTime StartDate { get; private set; }
+    public DateOnly StartDate { get; private set; }
 
-    public DateTime? EndDate { get; private set; }
+    public DateOnly? EndDate { get; private set; }
 
-    public DateTime ExpectedEndDate { get; private set; }
+    public DateOnly ExpectedEndDate { get; private set; }
 
     public RentStatusEnum Status { get; private set; }
 
@@ -32,8 +32,8 @@ public class Rental : BaseEntity
         int courierId,
         int motorcycleId,
         int planId,
-        DateTime startDate,
-        DateTime expectedEndDate)
+        DateOnly startDate,
+        DateOnly expectedEndDate)
     {
         CourierId = courierId;
         MotorcycleId = motorcycleId;
@@ -48,10 +48,11 @@ public class Rental : BaseEntity
         int courierId,
         int motorcycleId,
         int planId,
-        DateTime expectedEndDate) =>
-            new(courierId, motorcycleId, planId, DateTime.Now.AddDays(1), expectedEndDate);
+        DateOnly startDate,
+        DateOnly expectedEndDate) =>
+            new(courierId, motorcycleId, planId, startDate, expectedEndDate);
 
-    public void Complete(DateTime endDate)
+    public void Complete(DateOnly endDate)
     {
         EndDate = endDate;
         Status = RentStatusEnum.Finished;
@@ -61,22 +62,24 @@ public class Rental : BaseEntity
         TotalPayment = CalculateBaseCoast() + CalculateFee();
     }
 
+    public void UpdatePlan(Plan plan) => Plan = plan;
+
     private decimal CalculateFee()
     {
-        var notEffectedDays = EndDate.Value.Subtract(StartDate).Days;
+        var notEffectedDays = EndDate.Value.DayNumber -  ExpectedEndDate.DayNumber;
 
         if (notEffectedDays == 0) return 0;
 
-        return notEffectedDays > 0 ?
-            Plan.CostPerDay * Plan.Fee * notEffectedDays :
+        return notEffectedDays < 0 ?
+            Plan.CostPerDay * Plan.Fee * Math.Abs(notEffectedDays) :
             Math.Abs(notEffectedDays) * 50.0M;
     }
 
     private decimal CalculateBaseCoast()
     {
-        DateTime endDate = EndDate >= ExpectedEndDate ? ExpectedEndDate : EndDate.Value;
+        var endDate = EndDate >= ExpectedEndDate ? ExpectedEndDate : EndDate.Value;
 
-        int totalDays = endDate.Subtract(StartDate).Days;
+        int totalDays = endDate.DayNumber - StartDate.DayNumber;
 
         return Plan.CostPerDay * totalDays;
     }

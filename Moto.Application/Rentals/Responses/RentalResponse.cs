@@ -17,8 +17,8 @@ public sealed record RentalResponse(
     int EntregadorId, 
     int MotoId, 
     int Plano,
-    DateTime DataInicio, 
-    DateTime? DataTermino,
-    DateTime DataPrevisaoTermino,
+    DateOnly DataInicio,
+    DateOnly? DataTermino,
+    DateOnly DataPrevisaoTermino,
     decimal? ValorTotal
 );

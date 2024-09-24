@@ -71,9 +71,9 @@ public class RentalController(IMediator mediator) : ControllerBase
     [SwaggerOperation("Consultar moto existente por id")]
     [SwaggerResponse(StatusCodes.Status200OK, "Detalhes da locação", typeof(ApiResponse<RentalResponse>))]
     [SwaggerResponse(StatusCodes.Status404NotFound, "Dados não encontrado", typeof(ApiResponse))]
-    public async Task<IActionResult> Get([FromRoute] GetRentalById command, CancellationToken cancellationToken)
+    public async Task<IActionResult> Get([FromRoute] int id, CancellationToken cancellationToken)
     {
-        var result = await mediator.Send(command, cancellationToken);
+        var result = await mediator.Send(new GetRentalById(id), cancellationToken);
         return result.ToActionResult();
     }
 }

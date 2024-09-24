@@ -12,7 +12,7 @@
 public sealed record CourierResponse(
     int Id,
     string? Cnpj,
-    DateTime DataNascimento,
+    DateOnly DataNascimento,
     string? NumeroCnh,
     string? TipoCnh,
     string? CaminhoImagemCnh);

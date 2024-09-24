@@ -22,11 +22,11 @@ internal sealed class PlanConfiguration : IEntityTypeConfiguration<Plan>
         builder.Property(x => x.Fee).HasPrecision(5, 2);
 
         builder.HasData(
-            new Plan(7, 30, 1.20M),
-            new Plan(15, 28, 1.40M),
-            new Plan(30, 22, 1),
-            new Plan(45, 20, 1),
-            new Plan(50, 18, 1)
+            new Plan(7, 30, 0.2M),
+            new Plan(15, 28, 0.4M),
+            new Plan(30, 22, 0),
+            new Plan(45, 20, 0),
+            new Plan(50, 18, 0)
         );
     }
 }

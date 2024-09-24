@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Moto.Persistence.Contexts;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Moto.Persistence.Migrations
 {
     [DbContext(typeof(MotoDbContext))]
-    partial class MotoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240924190450_ChangeRentalFee")]
+    partial class ChangeRentalFee
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,8 +33,8 @@ namespace Moto.Persistence.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityAlwaysColumn(b.Property<int>("Id"));
 
-                    b.Property<DateOnly>("BirthDate")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("BirthDate")
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("DrivingLicenseImagePath")
                         .HasMaxLength(256)
@@ -158,11 +161,11 @@ namespace Moto.Persistence.Migrations
                     b.Property<int>("CourierId")
                         .HasColumnType("integer");
 
-                    b.Property<DateOnly?>("EndDate")
-                        .HasColumnType("date");
+                    b.Property<DateTime?>("EndDate")
+                        .HasColumnType("timestamp without time zone");
 
-                    b.Property<DateOnly>("ExpectedEndDate")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("ExpectedEndDate")
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<int>("MotorcycleId")
                         .HasColumnType("integer");
@@ -170,8 +173,8 @@ namespace Moto.Persistence.Migrations
                     b.Property<int>("PlanId")
                         .HasColumnType("integer");
 
-                    b.Property<DateOnly>("StartDate")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<int>("Status")
                         .HasColumnType("integer");

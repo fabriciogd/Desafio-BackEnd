@@ -45,7 +45,7 @@ internal sealed class CreateRentalHandler(
             return Result.NotFound(DomainErrors.Courier.NotFound);
         }
 
-        var plan = _planRepository.GetByIdAsync(request.Plano, cancellationToken);
+        var plan = await _planRepository.GetByIdAsync(request.Plano, cancellationToken);
 
         if (plan is null)
         {
@@ -73,11 +73,15 @@ internal sealed class CreateRentalHandler(
             return Result.Error(DomainErrors.Motorcycle.InUse);
         }
 
+        var startDate = DateOnly.FromDateTime(DateTime.Now).AddDays(1);
+        var expectedEndDate = startDate.AddDays(plan.Id);
+
         var rental = Rental.Create(
             courier.Id,
             motorcycle.Id,
             plan.Id,
-            request.DataPrevisaoTermino
+            startDate,
+            expectedEndDate
         );
 
         if (!rental.IsValid)
