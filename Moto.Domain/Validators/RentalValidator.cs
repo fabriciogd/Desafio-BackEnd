@@ -23,10 +23,11 @@ public sealed class RentalValidator : AbstractValidator<Rental>
             .NotEmpty().WithMessage("Data de ínicio deve ser fornecida");
 
         RuleFor(x => x)
-            .Must(x => 
-                x.StartDate == default || 
-                x.ExpectedEndDate == default || 
+            .Must(x =>
+                x.StartDate == default ||
+                x.ExpectedEndDate == default ||
                 x.ExpectedEndDate > x.StartDate)
-            .WithMessage("Data de término experada precisa ser maior que data de ínicio");
+            .WithMessage("Data de término experada precisa ser maior que data de ínicio")
+            .WithErrorCode("LessThanStartDate");
     }
 }

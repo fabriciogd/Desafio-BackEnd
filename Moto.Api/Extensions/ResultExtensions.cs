@@ -16,6 +16,12 @@ internal static class ResultExtensions
             ? new OkObjectResult(ApiResponse.Ok(result.SuccessMessage))
             : result.ToHttpNonSuccessResult();
 
+    /// <summary>
+    /// Converts a <see cref="Result{T}"/> to an <see cref="IActionResult"/>.
+    /// </summary>
+    /// <typeparam name="T">The type of the result value.</typeparam>
+    /// <param name="result">The result to convert.</param>
+    /// <returns>An <see cref="IActionResult"/> representing the result.</returns>
     public static IActionResult ToActionResult<T>(this Result<T> result) =>
        result.IsSuccess
           ? new OkObjectResult(ApiResponse<T>.Ok(result.Value))

@@ -14,6 +14,7 @@ public static class DomainErrors
 
     public static class Courier
     {
+        public static string IncorretImageFormat => "Imagem precisa estar no formato png ou bmp";
         public static string RequiredImage => "Imagem é obrigatória";
         public static string NotFound => "Entregador não encontrada";
     }

@@ -25,5 +25,11 @@ internal sealed class RentalConfiguration : IEntityTypeConfiguration<Rental>
         builder.HasOne(x => x.Motorcycle)
             .WithMany()
             .HasForeignKey(x => x.MotorcycleId);
+
+        builder.HasOne(x => x.Plan)
+            .WithMany()
+            .HasForeignKey(x => x.PlanId);
+
+        builder.Navigation(a => a.Plan).AutoInclude();
     }
 }

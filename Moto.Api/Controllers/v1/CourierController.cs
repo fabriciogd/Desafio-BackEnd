@@ -10,11 +10,21 @@ using System.Net.Mime;
 
 namespace Moto.Api.Controllers.v1;
 
+/// <summary>
+/// The <see cref="CourierController"/> class is an ASP.NET Core API controller for managing couriers.
+/// It provides endpoints for creating, retrieving, and updating courier records.
+/// </summary>
 [ApiController]
 [ApiVersion("1.0")]
 [Route("api/entregadores")]
 public class CourierController(IMediator mediator): ControllerBase
 {
+    /// <summary>
+    /// Creates a new courier record.
+    /// </summary>
+    /// <param name="command">The command containing the details of the courier to create.</param>
+    /// <param name="cancellationToken">A cancellation token to cancel the operation.</param>
+    /// <returns>An IActionResult indicating the result of the operation.</returns>
     [HttpPost]
     [Consumes(MediaTypeNames.Application.Json)]
     [Produces(MediaTypeNames.Application.Json)]
@@ -27,6 +37,11 @@ public class CourierController(IMediator mediator): ControllerBase
         return result.ToActionResult();
     }
 
+    /// <summary>
+    /// Retrieves a list of existing couriers.
+    /// </summary>
+    /// <param name="cancellationToken">A cancellation token to cancel the operation.</param>
+    /// <returns>An IActionResult containing the list of couriers.</returns>
     [HttpGet()]
     [Consumes(MediaTypeNames.Application.Json)]
     [Produces(MediaTypeNames.Application.Json)]
@@ -38,6 +53,13 @@ public class CourierController(IMediator mediator): ControllerBase
         return result.ToActionResult();
     }
 
+    /// <summary>
+    /// Updates the driving license image for an existing courier.
+    /// </summary>
+    /// <param name="id">The ID of the courier to update.</param>
+    /// <param name="command">The command containing the new driving license image details.</param>
+    /// <param name="cancellationToken">A cancellation token to cancel the operation.</param>
+    /// <returns>An IActionResult indicating the result of the operation.</returns>
     [HttpPut("{id}/cnh")]
     [Consumes(MediaTypeNames.Application.Json)]
     [Produces(MediaTypeNames.Application.Json)]

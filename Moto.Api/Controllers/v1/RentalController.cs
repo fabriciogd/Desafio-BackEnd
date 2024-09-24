@@ -10,11 +10,21 @@ using System.Net.Mime;
 
 namespace Moto.Api.Controllers.v1;
 
+/// <summary>
+/// The <see cref="RentalController"/> class is an ASP.NET Core API controller for managing motorcycle rentals.
+/// It provides endpoints for creating a rental, completing a rental, and retrieving rental details.
+/// </summary>
 [ApiController]
 [ApiVersion("1.0")]
 [Route("api/locacao")]
 public class RentalController(IMediator mediator) : ControllerBase
 {
+    /// <summary>
+    /// Creates a new motorcycle rental.
+    /// </summary>
+    /// <param name="command">The command containing the details of the rental to create.</param>
+    /// <param name="cancellationToken">A cancellation token to cancel the operation.</param>
+    /// <returns>An IActionResult indicating the result of the operation.</returns>
     [HttpPost]
     [Consumes(MediaTypeNames.Application.Json)]
     [Produces(MediaTypeNames.Application.Json)]
@@ -27,6 +37,13 @@ public class RentalController(IMediator mediator) : ControllerBase
         return result.ToActionResult();
     }
 
+    /// <summary>
+    /// Completes a rental by informing the return date and calculating the total cost.
+    /// </summary>
+    /// <param name="id">The ID of the rental to complete.</param>
+    /// <param name="command">The command containing the return date and other details.</param>
+    /// <param name="cancellationToken">A cancellation token to cancel the operation.</param>
+    /// <returns>An IActionResult indicating the result of the operation.</returns>
     [HttpPut("{id}/devolucao")]
     [Consumes(MediaTypeNames.Application.Json)]
     [Produces(MediaTypeNames.Application.Json)]
@@ -42,6 +59,12 @@ public class RentalController(IMediator mediator) : ControllerBase
         return result.ToActionResult();
     }
 
+    /// <summary>
+    /// Retrieves the details of a rental by its ID.
+    /// </summary>
+    /// <param name="command">The command containing the ID of the rental to retrieve.</param>
+    /// <param name="cancellationToken">A cancellation token to cancel the operation.</param>
+    /// <returns>An IActionResult containing the details of the rental.</returns>
     [HttpGet("{id}")]
     [Consumes(MediaTypeNames.Application.Json)]
     [Produces(MediaTypeNames.Application.Json)]

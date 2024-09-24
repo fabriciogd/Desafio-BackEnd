@@ -10,11 +10,21 @@ using System.Net.Mime;
 
 namespace Moto.Api.Controllers.v1;
 
+/// <summary>
+/// The <see cref="MotorcycleController"/> class is an ASP.NET Core API controller for managing motorcycles.
+/// It provides endpoints for creating, retrieving, updating, and deleting motorcycle records.
+/// </summary>
 [ApiController]
 [ApiVersion("1.0")]
 [Route("api/motos")]
 public class MotorcycleController(IMediator mediator) : ControllerBase
 {
+    /// <summary>
+    /// Creates a new motorcycle record.
+    /// </summary>
+    /// <param name="command">The command containing the details of the motorcycle to create.</param>
+    /// <param name="cancellationToken">A cancellation token to cancel the operation.</param>
+    /// <returns>An IActionResult indicating the result of the operation.</returns>
     [HttpPost]
     [Consumes(MediaTypeNames.Application.Json)]
     [Produces(MediaTypeNames.Application.Json)]
@@ -27,6 +37,12 @@ public class MotorcycleController(IMediator mediator) : ControllerBase
         return result.ToActionResult();
     }
 
+    /// <summary>
+    /// Retrieves a list of existing motorcycles.
+    /// </summary>
+    /// <param name="query">The query to retrieve all motorcycles.</param>
+    /// <param name="cancellationToken">A cancellation token to cancel the operation.</param>
+    /// <returns>An IActionResult containing the list of motorcycles.</returns>
     [HttpGet()]
     [Consumes(MediaTypeNames.Application.Json)]
     [Produces(MediaTypeNames.Application.Json)]
@@ -38,6 +54,13 @@ public class MotorcycleController(IMediator mediator) : ControllerBase
         return result.ToActionResult();
     }
 
+    /// <summary>
+    /// Updates the license plate of an existing motorcycle.
+    /// </summary>
+    /// <param name="id">The ID of the motorcycle to update.</param>
+    /// <param name="command">The command containing the new license plate details.</param>
+    /// <param name="cancellationToken">A cancellation token to cancel the operation.</param>
+    /// <returns>An IActionResult indicating the result of the operation.</returns>
     [HttpPut("{id}/placa")]
     [Consumes(MediaTypeNames.Application.Json)]
     [Produces(MediaTypeNames.Application.Json)]
@@ -53,6 +76,12 @@ public class MotorcycleController(IMediator mediator) : ControllerBase
         return result.ToActionResult();
     }
 
+    /// <summary>
+    /// Retrieves the details of an existing motorcycle by its ID.
+    /// </summary>
+    /// <param name="id">The ID of the motorcycle to retrieve.</param>
+    /// <param name="cancellationToken">A cancellation token to cancel the operation.</param>
+    /// <returns>An IActionResult containing the details of the motorcycle.</returns>
     [HttpGet("{id}")]
     [Consumes(MediaTypeNames.Application.Json)]
     [Produces(MediaTypeNames.Application.Json)]
@@ -65,6 +94,12 @@ public class MotorcycleController(IMediator mediator) : ControllerBase
         return result.ToActionResult();
     }
 
+    /// <summary>
+    /// Deletes a motorcycle record by its ID.
+    /// </summary>
+    /// <param name="id">The ID of the motorcycle to delete.</param>
+    /// <param name="cancellationToken">A cancellation token to cancel the operation.</param>
+    /// <returns>An IActionResult indicating the result of the deletion.</returns>
     [HttpDelete("{id}")]
     [Consumes(MediaTypeNames.Application.Json)]
     [Produces(MediaTypeNames.Application.Json)]

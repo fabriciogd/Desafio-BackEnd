@@ -4,6 +4,10 @@ using System.Text.Json.Serialization;
 
 namespace Moto.Application.Motorcycles.IntegrationEvents;
 
+/// <summary>
+/// Integration event representing the creation of a motorcycle.
+/// This event is used to communicate the details of a newly created motorcycle across services.
+/// </summary>
 public sealed class MotorcycleCreatedIntegrationEvent : IIntegrationEvent
 {
     public int Id { get; set; }
@@ -13,6 +17,11 @@ public sealed class MotorcycleCreatedIntegrationEvent : IIntegrationEvent
 
     public string? LicensePlate { get; set; }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="MotorcycleCreatedIntegrationEvent"/> class
+    /// using data from the <see cref="MotorcycleCreatedEvent"/>.
+    /// </summary>
+    /// <param name="motorcycleCreatedEvent">The event that contains motorcycle creation data.</param>
     internal MotorcycleCreatedIntegrationEvent(MotorcycleCreatedEvent motorcycleCreatedEvent)
     {
         Id = motorcycleCreatedEvent.Motorcycle.Id;

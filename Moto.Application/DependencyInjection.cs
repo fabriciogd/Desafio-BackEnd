@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using Moto.Application.Behaviors;
+using Moto.Application.File;
 
 namespace Moto.Application;
 
@@ -16,6 +17,7 @@ public static class DependencyInjection
                 cfg.AddOpenBehavior(typeof(LoggingBehavior<,>));
             });
 
+        services.AddSingleton<IFileExtensionChecker, FileExtensionChecker>();
 
         return services;
     }

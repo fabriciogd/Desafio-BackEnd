@@ -4,7 +4,6 @@ using Moto.Application.Interfaces;
 using Moto.Domain.Base;
 using Moto.Persistence.Contexts;
 using System.Data;
-using System.Threading;
 
 namespace Moto.Persistence;
 
@@ -38,7 +37,7 @@ internal sealed class UnitOfWork(MotoDbContext _context, IMediator mediator) : I
 
                 await AfterSaveChangesAsync(domainEvents, cancellationToken);
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 await transaction.RollbackAsync();
             }

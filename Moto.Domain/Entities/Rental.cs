@@ -14,7 +14,7 @@ public class Rental : BaseEntity
 
     public DateTime StartDate { get; private set; }
 
-    public DateTime EndDate { get; private set; }
+    public DateTime? EndDate { get; private set; }
 
     public DateTime ExpectedEndDate { get; private set; }
 
@@ -33,14 +33,12 @@ public class Rental : BaseEntity
         int motorcycleId,
         int planId,
         DateTime startDate,
-        DateTime endDate,
         DateTime expectedEndDate)
     {
         CourierId = courierId;
         MotorcycleId = motorcycleId;
         PlanId = planId;
         StartDate = startDate;
-        EndDate = endDate;
         ExpectedEndDate = expectedEndDate;
 
         Validate();
@@ -50,10 +48,8 @@ public class Rental : BaseEntity
         int courierId,
         int motorcycleId,
         int planId,
-        DateTime startDate,
-        DateTime endDate,
         DateTime expectedEndDate) =>
-            new(courierId, motorcycleId, planId, DateTime.Now.AddDays(1), endDate, expectedEndDate);
+            new(courierId, motorcycleId, planId, DateTime.Now.AddDays(1), expectedEndDate);
 
     public void Complete(DateTime endDate)
     {
@@ -67,7 +63,7 @@ public class Rental : BaseEntity
 
     private decimal CalculateFee()
     {
-        var notEffectedDays = EndDate.Subtract(StartDate).Days;
+        var notEffectedDays = EndDate.Value.Subtract(StartDate).Days;
 
         if (notEffectedDays == 0) return 0;
 
@@ -78,7 +74,7 @@ public class Rental : BaseEntity
 
     private decimal CalculateBaseCoast()
     {
-        DateTime endDate = EndDate >= ExpectedEndDate ? ExpectedEndDate : EndDate;
+        DateTime endDate = EndDate >= ExpectedEndDate ? ExpectedEndDate : EndDate.Value;
 
         int totalDays = endDate.Subtract(StartDate).Days;
 
