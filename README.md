@@ -17,3 +17,8 @@ Em conjunto deste, foi utilizado o Result pattern para retorno do resultado da a
 
 Para os testes de integração foi implementado o uso de [TestContainer](https://testcontainers.com/), aonde é possivel rodar um 
 container do Postgre durante os testes. Para cada classe de teste, um container é criado e ao final o mesmo é removido.
+
+Para o projeto foi adotado o padrão CQRS juntamente da biblioteca [MediatR](https://github.com/jbogard/MediatR).
+Para realizar todos logs do comandos e queries executadas foi criado um pipeline behavior.
+
+Para consumo do evento foi criado um background service que utiliza também a biblioteca RabbitMQ.Client. Para melhor resiliência, foi desativato o auto-ack.
