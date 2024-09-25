@@ -1,8 +1,8 @@
 ﻿using MediatR;
-using Moto.Application.Interfaces;
 using Moto.Domain.Repositories;
 using Moto.Application.Extensions;
-using Moto.Application.Motorcycles.IntegrationEvents;
+using Moto.Application.Contracts.Context;
+using Moto.Application.UseCases.Motorcycles.IntegrationEvents;
 
 namespace Moto.BackgroundTasks.IntegrationEvents;
 

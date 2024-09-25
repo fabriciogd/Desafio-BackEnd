@@ -8,7 +8,7 @@ public sealed class Courier : BaseEntity
 {
     public Cnpj Cnpj { get; private set; }
     public DateOnly BirthDate { get; private set; }
-    public Cnh DrivingLicense { get; private set; }
+    public DrivingLicense DrivingLicense { get; private set; }
     public string? DrivingLicenseType { get; private set; }
     public string? DrivingLicenseImagePath { get; private set; }
 
@@ -17,7 +17,7 @@ public sealed class Courier : BaseEntity
 
     }
 
-    private Courier(Cnpj cnpj, DateOnly birthDate, Cnh drivingLicense, string? drivingLicenseType)
+    private Courier(Cnpj cnpj, DateOnly birthDate, DrivingLicense drivingLicense, string? drivingLicenseType)
     {
         Cnpj = cnpj;
         BirthDate = birthDate;
@@ -30,7 +30,7 @@ public sealed class Courier : BaseEntity
         Validate();
     }
 
-    public static Courier Create(Cnpj cnpj, DateOnly birthDate, Cnh drivingLicense, string? drivingLicenseType) => 
+    public static Courier Create(Cnpj cnpj, DateOnly birthDate, DrivingLicense drivingLicense, string? drivingLicenseType) => 
             new Courier(cnpj, birthDate, drivingLicense, drivingLicenseType);
 
     public void UpdateDrivingLicenseImagePath(string drivingLicenseImagePath) => DrivingLicenseImagePath = drivingLicenseImagePath;

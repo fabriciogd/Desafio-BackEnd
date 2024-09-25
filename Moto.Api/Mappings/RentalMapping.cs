@@ -1,4 +1,4 @@
-﻿using Moto.Application.Rents.Responses;
+﻿using Moto.Application.UseCases.Rentals.Responses;
 using Moto.Domain.Entities;
 
 namespace Moto.Api.Mappings;

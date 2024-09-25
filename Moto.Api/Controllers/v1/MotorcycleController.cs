@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using Moto.Api.Extensions;
 using Moto.Api.Mappings;
 using Moto.Api.Models;
-using Moto.Application.Motorcycles.Commands;
-using Moto.Application.Motorcycles.Queries;
-using Moto.Application.Motorcycles.Responses;
+using Moto.Application.UseCases.Motorcycles.Commands;
+using Moto.Application.UseCases.Motorcycles.Queries;
+using Moto.Application.UseCases.Motorcycles.Responses;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Net.Mime;
 

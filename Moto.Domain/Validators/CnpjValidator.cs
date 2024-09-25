@@ -47,7 +47,7 @@ public sealed class CnpjValidator : AbstractValidator<Cnpj>
     {
         RuleFor(cnpj => cnpj.Value)
             .NotEmpty()
-            .MinimumLength(14).WithMessage("CNPJ deve conter o mínimo de 14 caracteres")
+            .Length(14).WithMessage("CNPJ deve conter 14 caracteres")
             .Must(IsValid)
             .WithMessage("CNPJ inválido")
             .WithErrorCode("CnpjValidator");

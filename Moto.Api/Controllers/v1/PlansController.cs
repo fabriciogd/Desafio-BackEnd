@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Moto.Api.Mappings;
-using Moto.Application.Plans.Queries;
-using Moto.Application.Plans.Responses;
+using Moto.Application.UseCases.Plans.Queries;
+using Moto.Application.UseCases.Plans.Responses;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Net.Mime;
 

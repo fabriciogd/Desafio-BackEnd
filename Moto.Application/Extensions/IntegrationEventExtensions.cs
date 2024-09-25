@@ -1,4 +1,4 @@
-﻿using Moto.Application.Base;
+﻿using Moto.Application.Contracts.Event;
 using Moto.Domain.Entities;
 using Newtonsoft.Json;
 

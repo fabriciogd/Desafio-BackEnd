@@ -1,5 +1,4 @@
-﻿using Moto.Application.Couriers.Responses;
-using Moto.Application.Motorcycles.Responses;
+﻿using Moto.Application.UseCases.Couriers.Responses;
 using Moto.Domain.Entities;
 
 namespace Moto.Api.Mappings;

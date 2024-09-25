@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Moto.Application.Interfaces;
+using Moto.Application.Contracts.Context;
 using Moto.Domain.Base;
 using Moto.Persistence.Contexts;
 using System.Data;

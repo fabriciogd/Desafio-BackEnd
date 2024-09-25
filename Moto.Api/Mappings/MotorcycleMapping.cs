@@ -1,4 +1,4 @@
-﻿using Moto.Application.Motorcycles.Responses;
+﻿using Moto.Application.UseCases.Motorcycles.Responses;
 using Moto.Domain.Entities;
 
 namespace Moto.Api.Mappings;

@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using Moto.Api.Extensions;
 using Moto.Api.Mappings;
 using Moto.Api.Models;
-using Moto.Application.Couriers.Commands;
-using Moto.Application.Couriers.Queries;
-using Moto.Application.Couriers.Responses;
+using Moto.Application.UseCases.Couriers.Commands;
+using Moto.Application.UseCases.Couriers.Queries;
+using Moto.Application.UseCases.Couriers.Responses;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Net.Mime;
 

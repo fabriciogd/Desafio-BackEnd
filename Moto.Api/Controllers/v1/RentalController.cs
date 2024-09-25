@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using Moto.Api.Extensions;
 using Moto.Api.Mappings;
 using Moto.Api.Models;
-using Moto.Application.Rentals.Commands;
-using Moto.Application.Rentals.Queries;
-using Moto.Application.Rents.Responses;
+using Moto.Application.UseCases.Rentals.Commands;
+using Moto.Application.UseCases.Rentals.Queries;
+using Moto.Application.UseCases.Rentals.Responses;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Net.Mime;
 

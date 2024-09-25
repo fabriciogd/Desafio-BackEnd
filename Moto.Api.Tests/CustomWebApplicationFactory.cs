@@ -9,10 +9,10 @@ using System.Data.Common;
 using System.Data.Entity.Infrastructure;
 using Testcontainers.PostgreSql;
 using Microsoft.Extensions.Logging;
-using Moto.Application.Bus;
 using Moq;
-using Moto.Application.Base;
 using Microsoft.AspNetCore.TestHost;
+using Moto.Application.Contracts.Event;
+using Moto.Application.Contracts.Bus;
 
 namespace Moto.Api.Tests;
 

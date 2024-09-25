@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Moto.Application.Bus;
-using Moto.Application.Storage;
+using Moto.Application.Contracts.Bus;
+using Moto.Application.Contracts.Storage;
 using Moto.Infraestructure.Bus;
 using Moto.Infraestructure.Storage;
 

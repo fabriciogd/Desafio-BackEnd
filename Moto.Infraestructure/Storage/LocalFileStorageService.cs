@@ -1,4 +1,4 @@
-﻿using Moto.Application.Storage;
+﻿using Moto.Application.Contracts.Storage;
 
 namespace Moto.Infraestructure.Storage;
 

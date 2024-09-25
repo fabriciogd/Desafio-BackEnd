@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Moto.Application.Interfaces;
+using Moto.Application.Contracts.Context;
 using Moto.Domain.Repositories;
 using Moto.Persistence.Contexts;
 using Moto.Persistence.Repositories;

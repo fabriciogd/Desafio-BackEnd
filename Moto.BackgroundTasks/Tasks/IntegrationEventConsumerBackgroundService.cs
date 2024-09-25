@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Moto.Application.Base;
+using Moto.Application.Contracts.Event;
 using Moto.BackgroundTasks.Services;
 using Moto.Infraestructure.Bus;
 using Newtonsoft.Json;

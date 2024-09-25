@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
-using Moto.Application.Base;
-using Moto.Application.Bus;
+using Moto.Application.Contracts.Bus;
+using Moto.Application.Contracts.Event;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using System.Text;

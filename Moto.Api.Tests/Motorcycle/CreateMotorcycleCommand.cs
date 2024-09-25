@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using Moto.Application.Motorcycles.Commands;
+using Moto.Application.UseCases.Motorcycles.Commands;
 using System.Net;
 using System.Net.Http.Json;
 
