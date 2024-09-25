@@ -29,7 +29,7 @@ public class MotorcycleController(IMediator mediator) : ControllerBase
     [Consumes(MediaTypeNames.Application.Json)]
     [Produces(MediaTypeNames.Application.Json)]
     [SwaggerOperation("Cadastrar uma nova moto")]
-    [SwaggerResponse(StatusCodes.Status201Created, "Moto criada com sucesso")]
+    [SwaggerResponse(StatusCodes.Status200OK, "Moto criada com sucesso")]
     [SwaggerResponse(StatusCodes.Status400BadRequest, "Dados inválidos", typeof(ApiResponse))]
     public async Task<IActionResult> Create([FromBody] CreateMotorcycle command, CancellationToken cancellationToken)
     {

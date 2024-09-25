@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using Moto.Application.Interfaces;
 using Moto.Application.Motorcycles.Commands;
+using Moto.Application.Motorcycles.Responses;
 using Moto.Domain.Entities;
 using Moto.Domain.Errors;
 using Moto.Domain.Primitives;
@@ -56,6 +57,8 @@ internal sealed class CreateMotorcycleHandler(
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         _logger.LogInformation("Motrocycle created with success {@Motorcycle}", motorcycle);
+
+        var response = new MotorcycleResponse(motorcycle.Id, motorcycle.Year, motorcycle.Model, motorcycle.LicensePlate);
 
         return Result.Created();
     }

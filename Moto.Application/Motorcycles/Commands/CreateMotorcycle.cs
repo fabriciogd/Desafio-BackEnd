@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Moto.Application.Motorcycles.Responses;
 using Moto.Domain.Primitives;
 
 namespace Moto.Application.Motorcycles.Commands;

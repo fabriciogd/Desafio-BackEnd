@@ -2,16 +2,19 @@
 
 public class Result<T> : IResult
 {
-    protected Result() { }
-    public Result(T value) => Value = value;
     public T Value { get; init; }
+    public bool IsSuccess => Status == ResultStatus.Ok;
     public string SuccessMessage { get; init; }
     public ResultStatus Status { get; protected set; } = ResultStatus.Ok;
     public IEnumerable<ValidationError> ValidationErrors { get; protected set; } = [];
     public IEnumerable<string> Errors { get; protected set; } = [];
+    protected Result() { }
+    public Result(T value) => Value = value;
+
     protected Result(ResultStatus status) => Status = status;
-    public bool IsSuccess => Status == ResultStatus.Ok;
+
     public static Result<T> Success(T value) => new(value);
+
 
     /// <summary>
     /// Represents a successful operation that resulted in the creation of a new resource.
@@ -41,4 +44,20 @@ public class Result<T> : IResult
     /// <param name="errorMessages">A list of string error messages.</param>
     /// <returns>A Result<typeparamref name="T"/></returns>
     public static Result<T> NotFound(params string[] errorMessages) => new(ResultStatus.NotFound) { Errors = errorMessages };
+    
+    /// <summary>
+    /// Represents a situation where a service is in conflict due to the current state of a resource,
+    /// such as an edit conflict between multiple concurrent updates.
+    /// </summary>
+    /// <returns>A Result<typeparamref name="T"/></returns>
+    public static Result<T> Conflict() => new(ResultStatus.Conflict);
+
+    /// <summary>
+    /// Represents a situation where a service is in conflict due to the current state of a resource,
+    /// such as an edit conflict between multiple concurrent updates.
+    /// Error messages may be provided and will be exposed via the Errors property.
+    /// </summary>
+    /// <param name="errorMessages">A list of string error messages.</param>
+    /// <returns>A Result<typeparamref name="T"/></returns>
+    public static Result<T> Conflict(params string[] errorMessages) => new(ResultStatus.Conflict) { Errors = errorMessages };
 }

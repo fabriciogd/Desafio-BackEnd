@@ -29,7 +29,7 @@ public class CourierController(IMediator mediator): ControllerBase
     [Consumes(MediaTypeNames.Application.Json)]
     [Produces(MediaTypeNames.Application.Json)]
     [SwaggerOperation("Cadastrar entregador")]
-    [SwaggerResponse(StatusCodes.Status201Created, "Entregador cadastrado com sucesso")]
+    [SwaggerResponse(StatusCodes.Status200OK, "Entregador cadastrado com sucesso")]
     [SwaggerResponse(StatusCodes.Status400BadRequest, "Dados inválidos", typeof(ApiResponse))]
     public async Task<IActionResult> Create([FromBody] CreateCourier command, CancellationToken cancellationToken)
     {
