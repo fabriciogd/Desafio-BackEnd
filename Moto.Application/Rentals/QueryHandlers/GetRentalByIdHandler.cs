@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
 using Moto.Application.Rentals.Queries;
-using Moto.Application.Rents.Responses;
+using Moto.Domain.Entities;
 using Moto.Domain.Errors;
 using Moto.Domain.Primitives;
 using Moto.Domain.Repositories;
@@ -16,9 +16,9 @@ namespace Moto.Application.Rentals.QueryHandlers;
 /// <param name="_repository">An instance of <see cref="IRentalRepository"/> for data access.</param>
 public sealed class GetRentalByIdHandler(
     ILogger<GetRentalByIdHandler> _logger,
-    IRentalRepository _repository) : IRequestHandler<GetRentalById, Result<RentalResponse>>
+    IRentalRepository _repository) : IRequestHandler<GetRentalById, Result<Rental>>
 {
-    public async Task<Result<RentalResponse>> Handle(GetRentalById request, CancellationToken cancellationToken)
+    public async Task<Result<Rental>> Handle(GetRentalById request, CancellationToken cancellationToken)
     {
         _logger.LogInformation("Starting get rental by id {Id}", request.Id);
 
@@ -28,22 +28,11 @@ public sealed class GetRentalByIdHandler(
         {
             _logger.LogError("Rental with {Id} not found", request.Id);
 
-            return Result<RentalResponse>.NotFound(DomainErrors.Rental.NotFound);
+            return Result<Rental>.NotFound(DomainErrors.Rental.NotFound);
         }
 
-        var response = new RentalResponse(
-            rental.Id,
-            rental.CourierId,
-            rental.MotorcycleId,
-            rental.PlanId,
-            rental.StartDate,
-            rental.EndDate,
-            rental.ExpectedEndDate,
-            rental.TotalPayment
-        );
+        _logger.LogInformation("Rental founded {Rental}", rental);
 
-        _logger.LogInformation("Rental founded {Rental}", response);
-
-        return Result.Success(response);
+        return Result.Success(rental);
     }
 }

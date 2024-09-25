@@ -47,7 +47,7 @@ public sealed class UpdateLicensePlateHandler(
         {
             _logger.LogError("License plate already in use by another motorcycle {Plate}", request.Placa);
 
-            return Result.Conflict(DomainErrors.Motorcycle.AlreadyExists);
+            return Result.Error(DomainErrors.Motorcycle.AlreadyExists);
         }
 
         var licensePlate = LicensePlate.Create(request.Placa);

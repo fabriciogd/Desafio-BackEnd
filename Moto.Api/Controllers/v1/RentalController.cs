@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Moto.Api.Extensions;
+using Moto.Api.Mappings;
 using Moto.Api.Models;
 using Moto.Application.Rentals.Commands;
 using Moto.Application.Rentals.Queries;
@@ -29,12 +30,18 @@ public class RentalController(IMediator mediator) : ControllerBase
     [Consumes(MediaTypeNames.Application.Json)]
     [Produces(MediaTypeNames.Application.Json)]
     [SwaggerOperation("Alugar uma moto")]
-    [SwaggerResponse(StatusCodes.Status201Created, "Locação efetuada com sucesso")]
+    [SwaggerResponse(StatusCodes.Status201Created, "Locação efetuada com sucesso", typeof(RentalResponse))]
     [SwaggerResponse(StatusCodes.Status400BadRequest, "Dados inválidos", typeof(ApiResponse))]
     public async Task<IActionResult> Create([FromBody] CreateRental command, CancellationToken cancellationToken)
     {
         var result = await mediator.Send(command, cancellationToken);
-        return result.ToActionResult();
+
+        if (!result.IsSuccess)
+            return result.ToHttpNonSuccessResult();
+
+        var rental = result.Value.ToResponse();
+
+        return CreatedAtAction(nameof(Get), new { id = rental.Id }, rental);
     }
 
     /// <summary>
@@ -48,7 +55,7 @@ public class RentalController(IMediator mediator) : ControllerBase
     [Consumes(MediaTypeNames.Application.Json)]
     [Produces(MediaTypeNames.Application.Json)]
     [SwaggerOperation("Informar data de devolução e calcular valor")]
-    [SwaggerResponse(StatusCodes.Status200OK, "Data de devolução informada com sucesso", typeof(ApiResponse))]
+    [SwaggerResponse(StatusCodes.Status200OK, "Data de devolução informada com sucesso")]
     [SwaggerResponse(StatusCodes.Status404NotFound, "Locação não encontrada", typeof(ApiResponse))]
     [SwaggerResponse(StatusCodes.Status400BadRequest, "Dados inválidos", typeof(ApiResponse))]
     public async Task<IActionResult> Complete([FromRoute] int id, [FromBody] CompleteRental command, CancellationToken cancellationToken)
@@ -56,7 +63,11 @@ public class RentalController(IMediator mediator) : ControllerBase
         command = command with { Id = id };
 
         var result = await mediator.Send(command, cancellationToken);
-        return result.ToActionResult();
+
+        if (!result.IsSuccess)
+            return result.ToHttpNonSuccessResult();
+
+        return Ok();
     }
 
     /// <summary>
@@ -69,11 +80,17 @@ public class RentalController(IMediator mediator) : ControllerBase
     [Consumes(MediaTypeNames.Application.Json)]
     [Produces(MediaTypeNames.Application.Json)]
     [SwaggerOperation("Consultar moto existente por id")]
-    [SwaggerResponse(StatusCodes.Status200OK, "Detalhes da locação", typeof(ApiResponse<RentalResponse>))]
+    [SwaggerResponse(StatusCodes.Status200OK, "Detalhes da locação", typeof(RentalResponse))]
     [SwaggerResponse(StatusCodes.Status404NotFound, "Dados não encontrado", typeof(ApiResponse))]
     public async Task<IActionResult> Get([FromRoute] int id, CancellationToken cancellationToken)
     {
         var result = await mediator.Send(new GetRentalById(id), cancellationToken);
-        return result.ToActionResult();
+
+        if (!result.IsSuccess)
+            return result.ToHttpNonSuccessResult();
+
+        var rental = result.Value.ToResponse();
+
+        return Ok(rental);
     }
 }

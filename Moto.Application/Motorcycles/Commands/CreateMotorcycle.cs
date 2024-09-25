@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using Moto.Application.Motorcycles.Responses;
+using Moto.Domain.Entities;
 using Moto.Domain.Primitives;
 
 namespace Moto.Application.Motorcycles.Commands;
@@ -10,4 +10,4 @@ namespace Moto.Application.Motorcycles.Commands;
 /// <param name="Ano">The year of the motorcycle.</param>
 /// <param name="Modelo">The model of the motorcycle.</param>
 /// <param name="Placa">The license plate of the motorcycle.</param>
-public sealed record CreateMotorcycle(short Ano, string? Modelo, string? Placa) : IRequest<Result>;
+public sealed record CreateMotorcycle(short Ano, string? Modelo, string? Placa) : IRequest<Result<Motorcycle>>;

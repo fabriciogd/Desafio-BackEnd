@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Moto.Api.Extensions;
+using Moto.Api.Mappings;
 using Moto.Api.Models;
 using Moto.Application.Couriers.Commands;
 using Moto.Application.Couriers.Queries;
@@ -17,7 +18,7 @@ namespace Moto.Api.Controllers.v1;
 [ApiController]
 [ApiVersion("1.0")]
 [Route("api/entregadores")]
-public class CourierController(IMediator mediator): ControllerBase
+public class CourierController(IMediator mediator) : ControllerBase
 {
     /// <summary>
     /// Creates a new courier record.
@@ -29,12 +30,18 @@ public class CourierController(IMediator mediator): ControllerBase
     [Consumes(MediaTypeNames.Application.Json)]
     [Produces(MediaTypeNames.Application.Json)]
     [SwaggerOperation("Cadastrar entregador")]
-    [SwaggerResponse(StatusCodes.Status200OK, "Entregador cadastrado com sucesso")]
+    [SwaggerResponse(StatusCodes.Status200OK, "Entregador cadastrado com sucesso", typeof(CourierResponse))]
     [SwaggerResponse(StatusCodes.Status400BadRequest, "Dados inválidos", typeof(ApiResponse))]
     public async Task<IActionResult> Create([FromBody] CreateCourier command, CancellationToken cancellationToken)
     {
         var result = await mediator.Send(command, cancellationToken);
-        return result.ToActionResult();
+
+        if (!result.IsSuccess)
+            return result.ToHttpNonSuccessResult();
+
+        var courier = result.Value.ToResponse();
+
+        return Ok(courier);
     }
 
     /// <summary>
@@ -46,11 +53,14 @@ public class CourierController(IMediator mediator): ControllerBase
     [Consumes(MediaTypeNames.Application.Json)]
     [Produces(MediaTypeNames.Application.Json)]
     [SwaggerOperation("Consultar entregadores existentes")]
-    [SwaggerResponse(StatusCodes.Status200OK, "Lista das entregadores", typeof(ApiResponse<List<CourierResponse>>))]
+    [SwaggerResponse(StatusCodes.Status200OK, "Lista das entregadores", typeof(List<CourierResponse>))]
     public async Task<IActionResult> List(CancellationToken cancellationToken)
     {
         var result = await mediator.Send(new GetAllCouriers(), cancellationToken);
-        return result.ToActionResult();
+
+        var motorcycles = result.Value.ToResponse();
+
+        return Ok(motorcycles);
     }
 
     /// <summary>
@@ -71,6 +81,10 @@ public class CourierController(IMediator mediator): ControllerBase
         command = command with { Id = id };
 
         var result = await mediator.Send(command, cancellationToken);
-        return result.ToActionResult();
+
+        if (!result.IsSuccess)
+            return result.ToHttpNonSuccessResult();
+
+        return Ok();
     }
 }

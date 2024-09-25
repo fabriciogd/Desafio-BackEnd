@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Moto.Domain.Entities;
 using Moto.Domain.Primitives;
 
 namespace Moto.Application.Couriers.Commands;
@@ -17,4 +18,4 @@ public sealed record CreateCourier(
     DateOnly DataNascimento,
     string? NumeroCnh,
     string? TipoCnh,
-    string? ImagemCnh) : IRequest<Result>;
+    string? ImagemCnh) : IRequest<Result<Courier>>;

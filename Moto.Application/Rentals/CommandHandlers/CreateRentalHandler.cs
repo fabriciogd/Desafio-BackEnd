@@ -24,7 +24,7 @@ internal sealed class CreateRentalHandler(
     IMotorcyleRepository _motorcyleRepository,
     IPlanRepository _planRepository,
     IRentalRepository _rentalRepository,
-    IUnitOfWork _unitOfWork) : IRequestHandler<CreateRental, Result>
+    IUnitOfWork _unitOfWork) : IRequestHandler<CreateRental, Result<Rental>>
 {
     /// <summary>
     /// Processes the request to create a new rental.
@@ -32,7 +32,7 @@ internal sealed class CreateRentalHandler(
     /// <param name="request">The command containing the details of the reantal to be created.</param>
     /// <param name="cancellationToken">A cancellation token to cancel the operation.</param>
     /// <returns>A <see cref="Result"/> indicating the outcome of the operation.</returns>
-    public async Task<Result> Handle(CreateRental request, CancellationToken cancellationToken)
+    public async Task<Result<Rental>> Handle(CreateRental request, CancellationToken cancellationToken)
     {
         _logger.LogInformation("Starting create rental with data {@Request}", request);
 
@@ -42,7 +42,7 @@ internal sealed class CreateRentalHandler(
         {
             _logger.LogError("Courier with {Id} not found", request.EntregadorId);
 
-            return Result.NotFound(DomainErrors.Courier.NotFound);
+            return Result<Rental>.NotFound(DomainErrors.Courier.NotFound);
         }
 
         var plan = await _planRepository.GetByIdAsync(request.Plano, cancellationToken);
@@ -51,7 +51,7 @@ internal sealed class CreateRentalHandler(
         {
             _logger.LogError("Plan with {Id} not found", request.Plano);
 
-            return Result.NotFound(DomainErrors.Plan.NotFound);
+            return Result<Rental>.NotFound(DomainErrors.Plan.NotFound);
         }
 
         var motorcycle = await _motorcyleRepository.GetByIdAsync(request.MotoId, cancellationToken);
@@ -60,7 +60,7 @@ internal sealed class CreateRentalHandler(
         {
             _logger.LogError("Motorcycle with {Id} not found", request.MotoId);
 
-            return Result.NotFound(DomainErrors.Motorcycle.NotFound);
+            return Result<Rental>.NotFound(DomainErrors.Motorcycle.NotFound);
         }
 
         var isMotorcycleRented = await _rentalRepository
@@ -70,7 +70,7 @@ internal sealed class CreateRentalHandler(
         {
             _logger.LogError("Motorcycle with {Id} in use", request.MotoId);
 
-            return Result.Error(DomainErrors.Motorcycle.InUse);
+            return Result<Rental>.Error(DomainErrors.Motorcycle.InUse);
         }
 
         var startDate = DateOnly.FromDateTime(DateTime.Now).AddDays(1);
@@ -88,7 +88,7 @@ internal sealed class CreateRentalHandler(
         {
             _logger.LogError("Create rental validated with errors {@Errors}", rental.Errors);
 
-            return Result.Invalid(rental.Errors);
+            return Result<Rental>.Invalid(rental.Errors);
         }
 
         await _rentalRepository.AddAsync(rental, cancellationToken);
@@ -97,6 +97,6 @@ internal sealed class CreateRentalHandler(
 
         _logger.LogInformation("Rental created with success {@Rental}", rental);
 
-        return Result.Created();
+        return Result.Created(rental);
     }
 }

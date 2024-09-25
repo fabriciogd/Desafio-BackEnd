@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using Moto.Application.Couriers.Responses;
+using Moto.Domain.Entities;
 using Moto.Domain.Primitives;
 
 namespace Moto.Application.Couriers.Queries;
@@ -8,4 +8,4 @@ namespace Moto.Application.Couriers.Queries;
 /// A request to retrieve all couriers from the system.
 /// Implements <see cref="IRequest{TResult}"/> to follow the CQRS pattern.
 /// </summary>
-public sealed record GetAllCouriers() : IRequest<Result<List<CourierResponse>>>;
+public sealed record GetAllCouriers() : IRequest<Result<List<Courier>>>;

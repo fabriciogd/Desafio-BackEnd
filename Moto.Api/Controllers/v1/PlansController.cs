@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Moto.Api.Extensions;
-using Moto.Api.Models;
+using Moto.Api.Mappings;
 using Moto.Application.Plans.Queries;
 using Moto.Application.Plans.Responses;
 using Swashbuckle.AspNetCore.Annotations;
@@ -28,10 +27,13 @@ public class PlansController(IMediator mediator) : ControllerBase
     [Consumes(MediaTypeNames.Application.Json)]
     [Produces(MediaTypeNames.Application.Json)]
     [SwaggerOperation("Consultar planos existentes")]
-    [SwaggerResponse(StatusCodes.Status200OK, "Lista das planos", typeof(ApiResponse<List<PlanResponse>>))]
+    [SwaggerResponse(StatusCodes.Status200OK, "Lista das planos", typeof(List<PlanResponse>))]
     public async Task<IActionResult> List(CancellationToken cancellationToken)
     {
         var result = await mediator.Send(new GetAllPlans(), cancellationToken);
-        return result.ToActionResult();
+
+        var plans = result.Value.ToResponse();
+
+        return Ok(plans);
     }
 }

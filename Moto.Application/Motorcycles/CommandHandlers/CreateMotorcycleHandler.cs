@@ -20,7 +20,7 @@ namespace Moto.Application.Motorcycles.CommandHandlers;
 internal sealed class CreateMotorcycleHandler(
     ILogger<CreateMotorcycleHandler> _logger,
     IMotorcyleRepository _repository,
-    IUnitOfWork _unitOfWork) : IRequestHandler<CreateMotorcycle, Result>
+    IUnitOfWork _unitOfWork) : IRequestHandler<CreateMotorcycle, Result<Motorcycle>>
 {
     /// <summary>
     /// Processes the request to create a new motorcycle.
@@ -28,7 +28,7 @@ internal sealed class CreateMotorcycleHandler(
     /// <param name="request">The command containing the details of the motorcycle to be created.</param>
     /// <param name="cancellationToken">A cancellation token to cancel the operation.</param>
     /// <returns>A <see cref="Result"/> indicating the outcome of the operation.</returns>
-    public async Task<Result> Handle(CreateMotorcycle request, CancellationToken cancellationToken)
+    public async Task<Result<Motorcycle>> Handle(CreateMotorcycle request, CancellationToken cancellationToken)
     {
         _logger.LogInformation("Starting create motorcycle with data {@Request}", request);
 
@@ -38,7 +38,7 @@ internal sealed class CreateMotorcycleHandler(
         {
             _logger.LogError("License plate already in use {@Request}", request);
 
-            return Result.Conflict(DomainErrors.Motorcycle.AlreadyExists);
+            return Result<Motorcycle>.Conflict(DomainErrors.Motorcycle.AlreadyExists);
         }
 
         var licensePlate = LicensePlate.Create(request.Placa);
@@ -49,7 +49,7 @@ internal sealed class CreateMotorcycleHandler(
         {
             _logger.LogError("Create motorcycle validated with errors {@Errors}", motorcycle.Errors);
 
-            return Result.Invalid(motorcycle.Errors);
+            return Result<Motorcycle>.Invalid(motorcycle.Errors);
         }
 
         await _repository.AddAsync(motorcycle, cancellationToken);
@@ -58,8 +58,6 @@ internal sealed class CreateMotorcycleHandler(
 
         _logger.LogInformation("Motrocycle created with success {@Motorcycle}", motorcycle);
 
-        var response = new MotorcycleResponse(motorcycle.Id, motorcycle.Year, motorcycle.Model, motorcycle.LicensePlate);
-
-        return Result.Created();
+        return Result.Created(motorcycle);
     }
 }

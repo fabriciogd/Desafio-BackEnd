@@ -3,7 +3,7 @@
 public class Result<T> : IResult
 {
     public T Value { get; init; }
-    public bool IsSuccess => Status == ResultStatus.Ok;
+    public bool IsSuccess => Status == ResultStatus.Ok || Status == ResultStatus.Created;
     public string SuccessMessage { get; init; }
     public ResultStatus Status { get; protected set; } = ResultStatus.Ok;
     public IEnumerable<ValidationError> ValidationErrors { get; protected set; } = [];
@@ -60,4 +60,13 @@ public class Result<T> : IResult
     /// <param name="errorMessages">A list of string error messages.</param>
     /// <returns>A Result<typeparamref name="T"/></returns>
     public static Result<T> Conflict(params string[] errorMessages) => new(ResultStatus.Conflict) { Errors = errorMessages };
+   
+    /// <summary>
+    /// Represents an error that occurred during the execution of the service.
+    /// A single error message may be provided and will be exposed via the Errors property.
+    /// </summary>
+    /// <param name="errorMessage"></param>
+    /// <returns></returns>
+    public static Result<T> Error(string errorMessage) => new(ResultStatus.Error) { Errors = [errorMessage] };
+
 }

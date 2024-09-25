@@ -49,7 +49,7 @@ public sealed class DeleteMotorcycleHandler(
         {
             _logger.LogError("Motorcycle with {Id} already in use", request.Id);
 
-            return Result.Conflict(DomainErrors.Motorcycle.InUse);
+            return Result.Error(DomainErrors.Motorcycle.InUse);
         }
 
         _repository.Remove(motorcycle);

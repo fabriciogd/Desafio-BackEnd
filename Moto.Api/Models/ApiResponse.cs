@@ -3,56 +3,57 @@
 namespace Moto.Api.Models;
 
 /// <summary>
-/// The `ApiResponse<T>` class is a generic response type that extends the <see cref="ApiResponse"/> class.
-/// It is used to wrap both the result (of type `T`) and additional metadata such as success status, 
-/// success message, and HTTP status code.
+/// Represents a standard API response that includes information about success, status code, 
+/// success message, and any errors that occurred during the API call.
 /// </summary>
-public sealed class ApiResponse<T> : ApiResponse
+public class ApiResponse
 {
+
     /// <summary>
-    /// Initializes a new instance of the <see cref="ApiResponse{T}"/> class with the result, success state,
-    /// success message, and status code.
+    /// Gets the HTTP status code for the response.
     /// </summary>
-    /// <param name="result">The result of type <typeparamref name="T"/> returned by the API.</param>
-    /// <param name="success">Indicates whether the operation was successful.</param>
-    /// <param name="successMessage">Optional success message.</param>
-    /// <param name="statusCode">HTTP status code for the response.</param>
+    public int StatusCode { get; protected init; }
+
+    /// <summary>
+    /// Gets the collection of errors returned when the operation fails.
+    /// If the operation is successful, this will be an empty collection.
+    /// </summary>
+    public IEnumerable<ApiErrorResponse> Errors { get; protected init; } = [];
+
+    /// <summary>
+    /// Constructor used during JSON deserialization to initialize the response with a 
+    /// success state, message, and HTTP status code.
+    /// </summary>
+    /// <param name="statusCode">HTTP status code for the operation result.</param>
     [JsonConstructor]
-    public ApiResponse(T result, bool success, string successMessage, int statusCode)
-        : base(success, successMessage, statusCode)
+    public ApiResponse(bool success, string successMessage, int statusCode)
     {
-        Result = result;
+        StatusCode = statusCode;
     }
 
     /// <summary>
-    /// Initializes a new empty instance of the <see cref="ApiResponse{T}"/> class.
-    /// This constructor can be used when values are not provided initially.
+    /// Default constructor for creating an empty API response object.
+    /// This can be used when no initial values need to be provided.
     /// </summary>
     public ApiResponse()
     {
     }
 
     /// <summary>
-    /// Gets the result value of the response, which is of type <typeparamref name="T"/>.
-    /// The result is set once during initialization and cannot be modified afterward.
+    /// Static factory method to create a bad request response with HTTP status 400 (Bad Request)
+    /// and a collection of errors describing what went wrong.
     /// </summary>
-    public T Result { get; private init; }
+    /// <param name="errors">A collection of errors to include in the response.</param>
+    /// <returns>An API response indicating the request was invalid.</returns>
+    public static ApiResponse BadRequest(IEnumerable<ApiErrorResponse> errors) =>
+        new() { StatusCode = StatusCodes.Status400BadRequest, Errors = errors };
 
     /// <summary>
-    /// Static factory method to create a successful response with HTTP status 200 (OK).
+    /// Static factory method to create a not found request response with HTTP status 404 (Not Found)
+    /// and a collection of errors describing what went wrong.
     /// </summary>
-    /// <param name="result">The result of type <typeparamref name="T"/> returned by the API.</param>
-    /// <returns>A new <see cref="ApiResponse{T}"/> indicating a successful operation.</returns>
-    public static ApiResponse<T> Ok(T result) =>
-        new() { Success = true, StatusCode = StatusCodes.Status200OK, Result = result };
-
-    /// <summary>
-    /// Static factory method to create a successful response with HTTP status 200 (OK)
-    /// and a success message.
-    /// </summary>
-    /// <param name="result">The result of type <typeparamref name="T"/> returned by the API.</param>
-    /// <param name="successMessage">The success message to include in the response.</param>
-    /// <returns>A new <see cref="ApiResponse{T}"/> indicating a successful operation with a success message.</returns>
-    public static ApiResponse<T> Ok(T result, string successMessage) =>
-        new() { Success = true, StatusCode = StatusCodes.Status200OK, Result = result, SuccessMessage = successMessage };
+    /// <param name="errors">A collection of errors to include in the response.</param>
+    /// <returns>An API response indicating the request was invalid.</returns>
+    public static ApiResponse NotFound(IEnumerable<ApiErrorResponse> errors) =>
+       new() { StatusCode = StatusCodes.Status404NotFound, Errors = errors };
 }

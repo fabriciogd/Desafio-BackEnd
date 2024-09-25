@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Moto.Domain.Entities;
 using Moto.Domain.Primitives;
 
 namespace Moto.Application.Rentals.Commands;
@@ -14,4 +15,4 @@ public sealed record CreateRental(
     int EntregadorId,
     int MotoId,
     int Plano
-) : IRequest<Result>;
+) : IRequest<Result<Rental>>;

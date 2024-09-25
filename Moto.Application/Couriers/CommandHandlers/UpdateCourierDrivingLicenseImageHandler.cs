@@ -54,7 +54,7 @@ public sealed class UpdateCourierDrivingLicenseImageHandler(
 
         var (isValid, extension) = _fileExtensionChecker.Validate(request.ImagemCNH, "png", "bmp");
 
-        if (isValid)
+        if (!isValid)
         {
             _logger.LogError("Driving license image invalid");
 

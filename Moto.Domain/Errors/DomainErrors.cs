@@ -17,6 +17,10 @@ public static class DomainErrors
         public static string IncorretImageFormat => "Imagem precisa estar no formato png ou bmp";
         public static string RequiredImage => "Imagem é obrigatória";
         public static string NotFound => "Entregador não encontrada";
+
+        public static string CnpjDuplicated = "CNPJ já esta sendo utilizado por outro entregador";
+
+        public static string DrivingLicenseDuplicated = "CNH já esta sendo utilizado por outro entregador";
     }
 
     public static class Plan

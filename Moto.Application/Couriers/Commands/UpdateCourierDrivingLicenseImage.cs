@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Moto.Domain.Primitives;
+using System.Text.Json.Serialization;
 
 namespace Moto.Application.Couriers.Commands;
 
@@ -9,4 +10,4 @@ namespace Moto.Application.Couriers.Commands;
 /// </summary>
 /// <param name="Id">The unique identifier of the courier whose driver's license image is being updated.</param>
 /// <param name="ImagemCNH">The new image of the courier's driver's license.</param>
-public sealed record UpdateCourierDrivingLicenseImage(int Id, string? ImagemCNH) : IRequest<Result>;
+public sealed record UpdateCourierDrivingLicenseImage([property: JsonIgnore] int Id, string? ImagemCNH) : IRequest<Result>;
