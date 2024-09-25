@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Moto.Domain.Base;
-using Moto.Domain.Interfaces;
+using Moto.Domain.Contracts;
 using Moto.Persistence.Contexts;
 
 namespace Moto.Persistence.Base;

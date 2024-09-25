@@ -1,5 +1,5 @@
-﻿using Moto.Domain.Entities;
-using Moto.Domain.Interfaces;
+﻿using Moto.Domain.Contracts;
+using Moto.Domain.Entities;
 
 namespace Moto.Domain.Repositories;
 

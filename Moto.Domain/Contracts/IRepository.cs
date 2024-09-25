@@ -1,7 +1,7 @@
 ﻿using Moto.Domain.Base;
 using System.Linq.Expressions;
 
-namespace Moto.Domain.Interfaces;
+namespace Moto.Domain.Contracts;
 
 public interface IRepository<TEntity> where TEntity : BaseEntity
 {
