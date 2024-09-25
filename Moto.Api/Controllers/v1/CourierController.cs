@@ -6,6 +6,8 @@ using Moto.Api.Models;
 using Moto.Application.UseCases.Couriers.Commands;
 using Moto.Application.UseCases.Couriers.Queries;
 using Moto.Application.UseCases.Couriers.Responses;
+using Moto.Application.UseCases.Motorcycles.Queries;
+using Moto.Application.UseCases.Motorcycles.Responses;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Net.Mime;
 
@@ -41,7 +43,7 @@ public class CourierController(IMediator mediator) : ControllerBase
 
         var courier = result.Value.ToResponse();
 
-        return Ok(courier);
+        return CreatedAtAction(nameof(Get), new { id = courier.Id }, courier);
     }
 
     /// <summary>
@@ -57,6 +59,31 @@ public class CourierController(IMediator mediator) : ControllerBase
     public async Task<IActionResult> List(CancellationToken cancellationToken)
     {
         var result = await mediator.Send(new GetAllCouriers(), cancellationToken);
+
+        var motorcycles = result.Value.ToResponse();
+
+        return Ok(motorcycles);
+    }
+
+
+    /// <summary>
+    /// Retrieves the details of an existing courier by its ID.
+    /// </summary>
+    /// <param name="id">The ID of the courier to retrieve.</param>
+    /// <param name="cancellationToken">A cancellation token to cancel the operation.</param>
+    /// <returns>An IActionResult containing the details of the courier.</returns>
+    [HttpGet("{id}")]
+    [Consumes(MediaTypeNames.Application.Json)]
+    [Produces(MediaTypeNames.Application.Json)]
+    [SwaggerOperation("Consultar entregador existente por id")]
+    [SwaggerResponse(StatusCodes.Status200OK, "Detalhes do entregador", typeof(CourierResponse))]
+    [SwaggerResponse(StatusCodes.Status404NotFound, "Entregador não encontrado", typeof(ApiResponse))]
+    public async Task<IActionResult> Get([FromRoute] int id, CancellationToken cancellationToken)
+    {
+        var result = await mediator.Send(new GetCourierById(id), cancellationToken);
+
+        if (!result.IsSuccess)
+            return result.ToHttpNonSuccessResult();
 
         var motorcycles = result.Value.ToResponse();
 
@@ -87,4 +114,6 @@ public class CourierController(IMediator mediator) : ControllerBase
 
         return Ok();
     }
+
+
 }

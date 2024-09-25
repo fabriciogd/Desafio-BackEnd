@@ -14,7 +14,14 @@ public static class DependencyInjection
     {
         string connectionString = configuration.GetConnectionString(ConnectionString.Default)!;
 
-        services.AddDbContext<MotoDbContext>(options => options.UseNpgsql(connectionString));
+        services.AddDbContext<MotoDbContext>(options => options.UseNpgsql(connectionString, options =>
+        {
+            options.EnableRetryOnFailure(
+                maxRetryCount: 5,
+                maxRetryDelay: TimeSpan.FromSeconds(30),
+                null
+            );
+        }));
 
         services.AddScoped<IUnitOfWork, UnitOfWork>();
 

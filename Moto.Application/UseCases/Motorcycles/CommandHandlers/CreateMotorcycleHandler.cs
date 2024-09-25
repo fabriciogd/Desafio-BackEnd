@@ -37,7 +37,7 @@ internal sealed class CreateMotorcycleHandler(
         {
             _logger.LogError("License plate already in use {@Request}", request);
 
-            return Result<Motorcycle>.Conflict(DomainErrors.Motorcycle.AlreadyExists);
+            return Result<Motorcycle>.Error(DomainErrors.Motorcycle.AlreadyExists);
         }
 
         var licensePlate = LicensePlate.Create(request.Placa);

@@ -10,7 +10,6 @@ public sealed class Motorcycle: BaseEntity
     public short Year { get; private set; }
     public string? Model { get; private set; }
     public LicensePlate LicensePlate { get; private set; }
-
     public Motorcycle()
     {
 

@@ -12,7 +12,7 @@ namespace Moto.Application.UseCases.Couriers.QueryHandlers;
 /// Implements <see cref="IRequestHandler{TRequest, TResult}"/> for the <see cref="GetAllCouriers"/> request.
 /// </summary>
 /// <param name="_repository">An instance of <see cref="ICourierRepository"/> for data access.</param>
-public class GetAllCouriersHandler(
+internal sealed class GetAllCouriersHandler(
     ICourierRepository _repository) : IRequestHandler<GetAllCouriers, Result<List<Courier>>>
 {
     /// <summary>

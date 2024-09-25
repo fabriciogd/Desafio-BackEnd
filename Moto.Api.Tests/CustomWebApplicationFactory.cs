@@ -6,13 +6,14 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Moto.Persistence.Contexts;
 using Npgsql;
 using System.Data.Common;
-using System.Data.Entity.Infrastructure;
 using Testcontainers.PostgreSql;
 using Microsoft.Extensions.Logging;
 using Moq;
 using Microsoft.AspNetCore.TestHost;
 using Moto.Application.Contracts.Event;
 using Moto.Application.Contracts.Bus;
+using Microsoft.Extensions.Hosting;
+using System.Data.Entity.Infrastructure;
 
 namespace Moto.Api.Tests;
 
@@ -21,7 +22,7 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>, IAsyn
     private readonly PostgreSqlContainer _dbContainer;
     public CustomWebApplicationFactory()
     {
-        _dbContainer = new PostgreSqlBuilder().Build();
+        _dbContainer = new PostgreSqlBuilder().WithAutoRemove(true).Build();
     }
 
     protected override void ConfigureWebHost(IWebHostBuilder builder)
@@ -36,6 +37,8 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>, IAsyn
             services.RemoveAll(typeof(DbContextOptions<MotoDbContext>));
 
             services.RemoveAll(typeof(IDbConnectionFactory));
+
+            services.RemoveAll(typeof(IHostedService));
 
             services.TryAddSingleton<IDbConnectionFactory>(_ =>
                 new NpgsqlConnectionFactory(_dbContainer.GetConnectionString())

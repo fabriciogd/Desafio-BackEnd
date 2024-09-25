@@ -18,6 +18,12 @@ public sealed class GetRentalByIdHandler(
     ILogger<GetRentalByIdHandler> _logger,
     IRentalRepository _repository) : IRequestHandler<GetRentalById, Result<Rental>>
 {
+    /// <summary>
+    /// Processes the query to return a rental by its ID.
+    /// </summary>
+    /// <param name="request">The query containing the rental ID.</param>
+    /// <param name="cancellationToken">The token used to propagate notifications that the operation should be canceled.</param>
+    /// <returns>A result containing the rental response if found, or a not found result.</returns>
     public async Task<Result<Rental>> Handle(GetRentalById request, CancellationToken cancellationToken)
     {
         _logger.LogInformation("Starting get rental by id {Id}", request.Id);
