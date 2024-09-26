@@ -25,7 +25,7 @@ public class CourierTest
         },
          error2 =>
          {
-             Assert.Equal("MinimumLengthValidator", error2.ErrorCode);
+             Assert.Equal("ExactLengthValidator", error2.ErrorCode);
          },
          error3 =>
          {
@@ -57,7 +57,7 @@ public class CourierTest
         },
         error2 =>
         {
-            Assert.Equal("MinimumLengthValidator", error2.ErrorCode);
+            Assert.Equal("ExactLengthValidator", error2.ErrorCode);
         },
         error3 =>
         {
