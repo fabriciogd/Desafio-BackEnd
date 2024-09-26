@@ -1,7 +1,7 @@
 ﻿namespace Moto.Api.Models;
 
 /// <summary>
-/// The `ApiErrorResponse` class represents an error message returned by the API. 
+/// The <see cref="ApiErrorResponse"/> class represents an error message returned by the API. 
 /// It contains a single message that provides details about the error.
 /// </summary>
 public class ApiErrorResponse

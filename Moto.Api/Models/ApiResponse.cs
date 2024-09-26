@@ -3,8 +3,8 @@
 namespace Moto.Api.Models;
 
 /// <summary>
-/// Represents a standard API response that includes information about success, status code, 
-/// success message, and any errors that occurred during the API call.
+/// The <see cref="ApiResponse"/> represents a standard API response that includes information about success, 
+/// status code and any errors that occurred during the API call.
 /// </summary>
 public class ApiResponse
 {
@@ -26,7 +26,7 @@ public class ApiResponse
     /// </summary>
     /// <param name="statusCode">HTTP status code for the operation result.</param>
     [JsonConstructor]
-    public ApiResponse(bool success, string successMessage, int statusCode)
+    public ApiResponse(int statusCode)
     {
         StatusCode = statusCode;
     }
