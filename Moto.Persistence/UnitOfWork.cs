@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Moto.Application.Contracts.Context;
 using Moto.Domain.Base;
 using Moto.Persistence.Contexts;
@@ -8,11 +9,14 @@ using System.Data;
 namespace Moto.Persistence;
 
 /// <summary>
-/// The UnitOfWork class implements the IUnitOfWork interface and provides a mechanism 
+/// The <see cref="UnitOfWork"/> class implements the  <see cref="IUnitOfWork"/> interface and provides a mechanism 
 /// to coordinate database operations and domain events within a transaction.
 /// It ensures that changes to the database and the publishing of domain events are handled atomically.
 /// </summary>
-internal sealed class UnitOfWork(MotoDbContext _context, IMediator mediator) : IUnitOfWork
+/// <param name="_logger">An instance of <see cref="ILogger{UnitOfWork}"/> for logging information and errors.</param>
+/// <param name="_mediator">The <see cref="IMediator"/> instance used for dispatching domain events.</param>
+/// <param name="_context">The <see cref="MotoDbContext"/> class represents the Entity Framework database context for the application.
+internal sealed class UnitOfWork(MotoDbContext _context, IMediator _mediator, ILogger<UnitOfWork> _logger) : IUnitOfWork
 {
     /// <summary>
     /// Saves changes to the database within a transaction and publishes domain events after the commit.
@@ -37,8 +41,10 @@ internal sealed class UnitOfWork(MotoDbContext _context, IMediator mediator) : I
 
                 await AfterSaveChangesAsync(domainEvents, cancellationToken);
             }
-            catch(Exception)
+            catch(Exception ex)
             {
+                _logger.LogError(ex, "An unexpected error occurred");
+
                 await transaction.RollbackAsync();
             }
         });
@@ -65,7 +71,7 @@ internal sealed class UnitOfWork(MotoDbContext _context, IMediator mediator) : I
 
     private async Task AfterSaveChangesAsync(IReadOnlyList<DomainEvent> domainEvents, CancellationToken cancellationToken)
     {
-        IEnumerable<Task> tasks = domainEvents.Select(domainEvent => mediator.Publish(domainEvent, cancellationToken));
+        IEnumerable<Task> tasks = domainEvents.Select(domainEvent => _mediator.Publish(domainEvent, cancellationToken));
 
         await Task.WhenAll(tasks);
     }

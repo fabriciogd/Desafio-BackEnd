@@ -31,9 +31,7 @@ internal sealed class CreateMotorcycleHandler(
     {
         _logger.LogInformation("Starting create motorcycle with data {@Request}", request);
 
-        var licensePlateInUse = await _repository.ExistsByLicensePlateAsync(request.Placa, cancellationToken);
-
-        if (licensePlateInUse)
+        if (await _repository.ExistsByLicensePlateAsync(request.Placa, cancellationToken))
         {
             _logger.LogError("License plate already in use {@Request}", request);
 

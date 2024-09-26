@@ -41,6 +41,9 @@ public sealed class UpdateLicensePlateHandler(
             return Result.NotFound(DomainErrors.Motorcycle.NotFound);
         }
 
+        if (request.Placa == motorcycle.LicensePlate)
+            return Result.Success();
+
         var existsWithPlate = await _repository.ExistsByLicensePlateAsync(request.Placa, cancellationToken);
 
         if (existsWithPlate is true)

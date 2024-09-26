@@ -6,8 +6,6 @@ using Moto.Api.Models;
 using Moto.Application.UseCases.Couriers.Commands;
 using Moto.Application.UseCases.Couriers.Queries;
 using Moto.Application.UseCases.Couriers.Responses;
-using Moto.Application.UseCases.Motorcycles.Queries;
-using Moto.Application.UseCases.Motorcycles.Responses;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Net.Mime;
 
