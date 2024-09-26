@@ -22,3 +22,7 @@ Para o projeto foi adotado o padrão CQRS juntamente da biblioteca [MediatR](htt
 Para realizar todos logs do comandos e queries executadas foi criado um pipeline behavior.
 
 Para consumo do evento foi criado um background service que utiliza também a biblioteca RabbitMQ.Client. Para melhor resiliência, foi desativato o auto-ack.
+
+Rodar através de docker-compose up -d
+Acessar http://localhost:8080/swagger/index.html
+Esperar alguns segundos até as migrations rodarem
